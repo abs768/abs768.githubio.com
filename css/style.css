@@ -1,0 +1,705 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100;200;300;400;500;600;700;900&display=swap');
+
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Slab', serif;
+}
+
+/* Navbar */
+#navbar {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 15px 20px;
+    transition: all 0.5s ease;
+}
+
+.navbar-brand, .nav-custom-link {
+    font-weight: bold;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.nav-custom-link:hover {
+    color: #FFF;
+    background-color: #000;
+}
+
+.sticky {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Main Content */
+.main {
+    background-color: #FFF;
+}
+
+/* Home Section */
+#home {
+    background: url('path/to/your/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: #FFF;
+    text-align: center;
+    padding: 100px 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* Projects Section */
+.section-6 {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+}
+
+.section-6-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sec-6-left {
+    width: 70%;
+}
+
+.sec-6-right {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+.sec6-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.sec6-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+.sec6-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Contact Section Styling */
+.section-contact {
+    padding: 50px 0;
+    background-color: #f8f9fa;
+    text-align: center;
+}
+
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin: 20px;
+    border-radius: 15px;
+    background-color: #fff;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-icon {
+    font-size: 2rem;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    color: #333;
+}
+
+.card p, .card a {
+    font-size: 1rem;
+    color: #555;
+}
+
+.card a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .card-row-1 {
+        flex-direction: column;
+    }
+
+    .section-6-inner {
+        flex-direction: column;
+    }
+
+    .sec-6-left, .sec-6-right {
+        width: 100%;
+    }
+}
+
+#home {
+    background: url('https://scientific-publishing.webshop.elsevier.com/wp-content/uploads/2022/08/what-background-study-how-to-write.jpg') no-repeat center center fixed; /* Replace 'path/to/your/background.jpg' with the actual path to your image */
+    background-size: cover;
+    color: white; /* Ensuring text is visible against the background */
+    text-align: center;
+    padding: 100px 20px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7); /* Optional: Adds a shadow to text for better readability */
+}
+
+/* Overall Section Styling */
+.section-contact {
+    display: flex;
+    justify-content: space-around; /* Ensures even spacing around each card */
+    align-items: center;
+    padding: 50px 10px;
+    background: #f9f9f9; /* Light background for better visibility */
+}
+
+/* Card Styling */
+.card {
+    width: 200px; /* Fixed width for each card */
+    height: 250px; /* Fixed height to prevent vertical stretching */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center content vertically within the card */
+    padding: 15px;
+    margin: 10px; /* Provides space between cards */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #fff; /* White background for contrast */
+    border-radius: 8px; /* Rounded corners for aesthetics */
+    text-align: center; /* Centers text horizontally */
+}
+
+.card-title {
+    margin-bottom: 10px; /* Space between title and content */
+    font-size: 16px; /* Larger font for title */
+    font-weight: bold; /* Bold for emphasis */
+    white-space: nowrap; /* Ensures the text stays in one line */
+    overflow: hidden; /* Hides any overflow */
+    text-overflow: ellipsis; /* Adds ellipsis if the text overflows */
+}
+
+.card-content {
+    font-size: 14px; /* Slightly smaller font for content */
+    color: #666; /* Grey color for regular text */
+}
+
+/* Hover Effects for Interaction */
+.card:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); /* Larger shadow on hover for effect */
+    transform: translateY(-3px); /* Slight lift on hover */
+}
+
+/* Responsive Behavior */
+@media (max-width: 768px) {
+    .section-contact {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+    }
+
+    .card {
+        width: 80%; /* Full width cards on smaller devices */
+        margin: 20px auto; /* Center align cards with auto margins */
+    }
+}
+/* Card Container */
+.section-contact {
+    display: flex;
+    justify-content: space-around; /* Ensures even spacing */
+    align-items: center; /* Vertical alignment */
+    padding: 20px 0; /* Padding for the section */
+    background-color: #f9f9f9; /* Consistent background */
+}
+
+/* Individual Cards */
+.card {
+    width: 220px; /* Standard width for all cards */
+    height: 200px; /* Standard height to maintain uniformity */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    padding: 20px;
+    margin: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #fff; /* White background for clarity */
+    border-radius: 8px; /* Rounded corners */
+}
+
+/* Card Content Styling */
+.card-content {
+    text-align: center; /* Ensures text is centered */
+    font-size: 16px; /* Adequate font size for readability */
+    color: #333; /* Darker text for better visibility */
+    margin: 5px 0; /* Space between elements */
+    white-space: nowrap; /* Prevents text from wrapping */
+    overflow: hidden; /* Hides overflow text */
+    text-overflow: ellipsis; /* Adds ellipsis to overflow text */
+}
+
+/* Card Icon Styling */
+.card-icon {
+    font-size: 24px; /* Icon size */
+    margin-bottom: 10px; /* Space below the icon */
+    color: #007bff; /* Icon color */
+}
+
+/* Hover Effects */
+.card:hover {
+    transform: translateY(-5px); /* Lift effect on hover */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2); /* Deeper shadow on hover */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .section-contact {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+    }
+
+    .card {
+        width: 80%; /* Full width cards on smaller devices */
+        margin: 20px auto; /* Center align cards */
+    }
+}
+.card {
+    width: 220px; /* Standard width for all cards */
+    height: 200px; /* Standard height to maintain uniformity */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    background-color: #fff; /* White background for clarity */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Prevents overflow of text outside the box */
+}
+
+.card-content, .card-link {
+    text-align: center; /* Centering text inside the card */
+    font-size: 16px; /* Uniform font size */
+    color: #333; /* Dark color for text */
+    margin: 5px 0; /* Margin for spacing */
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide text that overflows */
+    text-overflow: ellipsis; /* Use ellipsis for overflow */
+}
+
+.card-icon {
+    font-size: 24px; /* Size of icons */
+    color: #007bff; /* Color of icons */
+    margin-bottom: 15px; /* Space below icons */
+}
+
+/* Ensure vertical centering of content in each card */
+.card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around; /* Distributes space evenly */
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 768px) {
+    .section-contact {
+        flex-direction: column; /* Stack cards vertically on smaller screens */
+    }
+
+    .card {
+        width: 80%; /* Full width cards on smaller devices */
+        margin: 20px auto; /* Center align cards */
+    }
+}
+.contact-section {
+    text-align: center;
+    padding: 50px 0; /* Added top and bottom padding to the section */
+}
+
+.contact-heading {
+    margin-bottom: 50px; /* Increased space between the heading and cards */
+}
+
+.card {
+    width: 220px; /* Standard width for all cards */
+    height: 200px; /* Standard height for uniformity */
+    margin: 0 20px; /* Added horizontal margin between cards */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    justify-content: center; /* Center content vertically */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    font-size: 16px; /* Uniform font size for all text */
+    color: #333;
+}
+
+.card-content, .card-link {
+    text-align: center;
+    margin: 5px 0; /* Adjusted margin for spacing */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Ensure cards are distributed evenly across the container */
+.contact-section .container {
+    display: flex;
+    justify-content: space-between; /* This will space out the cards evenly */
+    flex-wrap: wrap; /* Allows cards to wrap on smaller screens */
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .contact-section .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 80%; /* Full width cards on smaller devices */
+        margin: 20px auto; /* Center align cards with vertical spacing */
+    }
+}
+
+.contact-heading {
+    margin-bottom: 20px; /* Reduced space between the heading and the cards */
+}
+
+/* Additional adjustment to bring the heading closer to the cards */
+.contact-section {
+    padding-top: 30px; /* Reduce the top padding of the section if necessary */
+    padding-bottom: 50px; /* Maintain bottom padding for overall spacing */
+}
+
+/* Ensure the heading is not too far from the cards */
+.contact-heading {
+    font-size: 24px; /* Adjust font size if necessary */
+    margin-bottom: 20px; /* Tighter margin to bring it closer to the cards */
+    padding: 0 20px; /* Ensure it has horizontal padding for responsiveness */
+    text-align: center; /* Center align the text */
+}
+
+/* If there's still too much space, directly adjust the position using transform */
+.contact-heading {
+    transform: translateY(-20px); /* Pull the text up slightly */
+}
+
+.contact-title {
+    padding-top: 30px; /* Add padding above the 'Contact Me' title */
+    margin-bottom: 0; /* Remove any bottom margin to reduce space */
+    text-align: center; /* Center the title */
+    font-size: 28px; /* Ensure the font size is appropriate */
+}
+
+/* Adjust the positioning of the 'Let's start a conversation' text */
+.conversation-start {
+    margin-top: 10px; /* Add a small margin on top for spacing */
+    margin-bottom: 30px; /* Ensure there's sufficient space below before the cards */
+    text-align: center; /* Center this text for consistency */
+    font-size: 20px; /* Optional: adjust font size as needed */
+}
+
+/* Enhance the spacing around the contact boxes */
+.contact-box-container {
+    display: flex;
+    justify-content: space-around; /* This will ensure boxes are evenly spaced */
+    margin-top: 20px; /* Space from the 'Let's start a conversation' text */
+}
+
+/* Each individual contact box styling */
+.contact-box {
+    padding: 20px; /* Padding inside each box */
+    border: 1px solid #ccc; /* Optional: add a border for visual distinction */
+    border-radius: 10px; /* Optional: round the corners */
+    width: 22%; /* Set a specific width for each box */
+    text-align: center; /* Center the text inside the box */
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .contact-box-container {
+        flex-direction: column; /* Stack the boxes vertically on smaller screens */
+        align-items: center; /* Align boxes centrally */
+    }
+
+    .contact-box {
+        width: 80%; /* Wider boxes on smaller screens */
+        margin-bottom: 20px; /* Space between stacked boxes */
+    }
+}
+/* Ensure the overall container is centered and padded correctly */
+.contact-section {
+    text-align: center;
+    padding: 40px 0 20px; /* Top, right-left, bottom padding */
+}
+
+/* Style for the "Contact Me" heading */
+.contact-header {
+    margin-bottom: 10px; /* Reduced space below the header */
+    font-size: 24px; /* Appropriate sizing for visibility */
+    font-weight: bold; /* Make the header stand out */
+}
+
+/* Styling for "Let's start a conversation" */
+.conversation-text {
+    margin-top: 20px; /* Space above this text */
+    margin-bottom: 30px; /* Space below before the contact boxes start */
+    font-size: 18px; /* Smaller than the header but still visible */
+}
+
+/* Styling for the contact cards/boxes */
+.contact-card {
+    display: inline-block; /* Align cards in a row */
+    margin: 10px 15px; /* Space between cards */
+    padding: 20px; /* Padding inside cards */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    width: 200px; /* Fixed width for each card */
+    vertical-align: top; /* Align tops of cards */
+}
+
+/* Ensuring responsiveness */
+@media (max-width: 768px) {
+    .contact-card {
+        margin: 10px auto; /* Center cards on smaller screens */
+        width: 80%; /* Make cards wider to use available space */
+    }
+}
+/* Main Contact Section styling */
+.contact-section {
+    text-align: center;
+    padding-top: 20px; /* Reduce padding to bring content closer to the top */
+}
+
+/* Styling for the "Contact Me" heading */
+.contact-header {
+    margin-bottom: 5px; /* Reduce space below the header to bring text closer */
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Styling for "Let's start a conversation" */
+.conversation-text {
+    margin-top: 0; /* Remove top margin to pull text up */
+    margin-bottom: 20px; /* Adequate space before the contact boxes */
+    font-size: 18px;
+}
+
+/* Styling for contact boxes */
+.contact-card {
+    display: inline-block;
+    margin: 10px; /* Uniform margin around cards for even spacing */
+    padding: 20px;
+    width: 200px; /* Adjust width as necessary */
+    vertical-align: top;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 768px) {
+    .contact-card {
+        margin: 10px auto; /* Center cards on smaller screens */
+        display: block; /* Stack cards vertically */
+        width: 90%; /* Use more screen width for better visibility */
+    }
+}
+
+/* Main Contact Section Styling */
+.contact-section {
+    text-align: center;
+    padding: 20px 0; /* Adjusted overall padding for better spacing */
+}
+
+/* Styling for "Contact Me" heading */
+.contact-header {
+    font-size: 24px; /* Ensures visibility and importance */
+    font-weight: bold;
+    margin-bottom: 40px; /* Reduced bottom margin to bring elements closer */
+}
+
+/* Styling for "Let's start a conversation" */
+.conversation-text {
+    margin-top: -5px; /* Negative top margin to pull text closer to header */
+    font-size: 18px; /* Legible size for secondary text */
+    color: #666; /* Subtle color difference if needed */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .contact-section {
+        padding: 10px 0; /* Less padding on smaller screens */
+    }
+}
+
+/* Contact Section Full Width Background */
+.contact-section {
+    width: 100%; /* Ensures the background covers full width */
+    padding: 40px 0; /* Top and bottom padding */
+    background-color: #f9f9f9; /* Example background color */
+    display: flex;
+    justify-content: center; /* Center align the content */
+    align-items: center; /* Vertically align */
+    flex-direction: column; /* Stack elements vertically */
+}
+
+/* Ensuring content within the section is centered and well-spaced */
+.contact-content {
+    width: 80%; /* Adjust width as needed */
+    max-width: 1200px; /* Maximum width to ensure content does not stretch too far on larger screens */
+    display: flex;
+    justify-content: space-around; /* Evenly space content horizontally */
+    align-items: center; /* Align items vertically */
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+    text-align: center; /* Center text within each box */
+}
+
+/* Individual Boxes Styling */
+.contact-box {
+    width: 200px; /* Fixed width for each box */
+    padding: 20px; /* Padding inside each box */
+    margin: 10px; /* Space between boxes */
+    background-color: #fff; /* Background color for boxes */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Text adjustments for titles and links */
+.contact-box h3, .contact-box a {
+    margin-top: 5px; /* Space above each element */
+    color: #333; /* Dark color for text for better visibility */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .contact-content {
+        flex-direction: column; /* Stack vertically on smaller screens */
+        align-items: center; /* Center alignment for consistency */
+    }
+}
+.section-7-text {
+    margin-top: 20px; /* Adds space above the text */
+    font-size: 24px; /* Adjust font size as needed */
+    font-family: Roboto, sans-serif; /* Ensures text uses the Roboto font */
+    font-weight: 400;
+    line-height: 1.6;
+    color: #FFFFFF; /* Adjust text color as needed */
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.text-white {
+    color: #fff; /* Ensure text turns white */
+}
+
+.bg-white {
+    background-color: #fff; /* Ensure background turns white */
+}
+
+.section-contact {
+    background-color: #333 !important; /* Dark grey background */
+    color: #f9f9f9 !important; /* Light grey text for high contrast */
+}
+
+.card {
+    background-color: #424242 !important; /* Slightly lighter grey for the cards */
+    color: #fff !important; /* White text for the cards */
+}
+
+.card-link, .card-link:hover {
+    color: #9fcdff !important; /* Light blue color for links, offering good visibility on dark backgrounds */
+    text-decoration: none !important; /* Removes underline from links */
+}
+
+.card a, .card a:hover {
+    color: #007bff !important; /* Bootstrap's default blue */
+    text-decoration: none !important;
+}
+.social-icons .bi {
+    font-size: 34px;  /* Adjust size as needed */
+    vertical-align: middle;
+}
+
+.social-icons i {
+    font-size: 2rem; /* Using 'rem' for responsive design */
+    color: #007bff; /* Example color: Bootstrap primary blue */
+    margin-right: 10px; /* Space between icons */
+}
+
+#contact {
+    background: linear-gradient(to right, #0f2027, #203a43, #2c5364); /* Dark blue gradient */
+    color: #ffffff; /* White text for contrast */
+    padding: 40px 0; /* Adds padding to the section */
+}
+
+.contact-heading, .card-heading, .card-para {
+    color: #ffffff; /* Ensures all text in the contact section is white */
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent cards */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle border for the cards */
+}
+
+.card-link {
+    color: #aad3df; /* Light blue for links to stand out */
+}
+
+/* Ensuring icons are visible */
+.card-circle-icon {
+    color: #4da8da; /* Light blue for icons */
+}
+
+.resume-section {
+    border: 2px solid black; /* Black border */
+    padding: 20px; /* Padding around the content */
+    margin: 20px 0; /* Vertical margin for separation */
+    background-color: #ffffff; /* White background to simulate a PDF look */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+
+.pdf-style {
+    border: 2px solid black;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+}
+
+.custom-img-large {
+    max-height: 600px; /* Adjust height as necessary */
+    width: auto; /* Maintain aspect ratio */
+}
+
+
+.social-icons {
+    display: inline-block;
+    margin: 0 10px;
+    color: #0077B5; /* LinkedIn blue, can adjust per platform */
+    font-size: 24px; /* Larger icon size */
+}
+
+.social-icons i {
+    transition: color 0.3s;
+}
+
+.social-icons:hover {
+    color: #000; /* Change to a darker color on hover */
+}
+
+/* Additional CSS to adjust the positioning of contact cards */
+.card-row-1 {
+    justify-content: center; /* This will center all the cards in the row */
+    margin-left: 50px; /* Adjust this value to increase or decrease the space on the left */
+}
+
+/* Responsive adjustment for smaller screens */
+@media (max-width: 768px) {
+    .card-row-1 {
+        margin-left: 10px; /* Less offset on smaller screens */
+    }
+}
