@@ -247,32 +247,27 @@
             </div>
         </div>
     </div>
-<!-- Include jQuery for simplicity (Optional, you can use pure JS as well) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<div class="row card-row-1">
+    <div class="row card-row-1">
     <div class="col-lg-3 col-md-6">
         <div class="card text-center custom-card">
-            <div class="card-body">
+            <div class="card-body" onclick="showAddress()">
                 <div class="card-circle" style="font-size: 36px;">
                     <i class="fa fa-map-marker-alt card-circle-icon" aria-hidden="true"></i>
                 </div>
                 <div class="card-heading">Address</div>
-                <div class="card-para" id="address-link" style="cursor: pointer;">Click to view address</div>
-                <div id="full-address" style="display: none;">
-                    700 Health Sciences Drive Chapin Apartments Chapin-H-2116A-1 Stony Brook 11790
-                </div>
+                <div class="card-para">Click to view address</div>
             </div>
         </div>
     </div>
 </div>
 
 <script>
-    // Toggle the display of the address on click
-    $("#address-link").click(function() {
-        $("#full-address").toggle();
-    });
+    function showAddress() {
+        alert('Address is: 700 Health Sciences Drive Chapin Apartments Chapin-H-2116A-1 Stony Brook 11790');
+    }
 </script>
+
         <div class="col-lg-3 col-md-6">
             <div class="card text-center custom-card mt-5 mt-md-0">
                 <div class="card-body">
