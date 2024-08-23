@@ -247,18 +247,24 @@
             </div>
         </div>
     </div>
+
     <div class="row card-row-1">
         <div class="col-lg-3 col-md-6">
             <div class="card text-center custom-card">
                 <div class="card-body">
                     <div class="card-circle" style="font-size: 36px;">
-                        <i class="fa fa-graduation-cap card-circle-icon" aria-hidden="true"></i>
+                        <i class="fa fa-home card-circle-icon" aria-hidden="true"></i>
                     </div>
-                    <div class="card-heading">Education</div>
-                    <div class="card-para"><a class="card-link" href="https://www.srmist.edu.in/program/b-tech-cse-with-specialization-in-artificial-intelligence-and-machine-learning/">SRM University Kattankulathur</a></div>
+                    <div class="card-para">
+                        <div style="color: white; margin-bottom: 5px;">Home</div>
+                        <a class="card-link" href="#" onclick="toggleAddress(); return false;" style="color: #007bff;">My Address</a>
+                        <div id="full-address" style="display:none; color: white;">
+                            700 Health Sciences Drive Chapin Apartments
+                        </div>
+                    </div>   
                 </div>
             </div>
-        </div>
+        </div> 
         <div class="col-lg-3 col-md-6">
             <div class="card text-center custom-card mt-5 mt-md-0">
                 <div class="card-body">
@@ -277,7 +283,7 @@
                         <i class="fa fa-envelope card-circle-icon" aria-hidden="true"></i>
                     </div>
                     <div class="card-heading">Email Address</div>
-                    <div class="card-para"><a href="https://mail.google.com/mail/?view=cm&fs=1&to=abhavanishankar2002@gmail.com" target="_blank">my mail id</a></div>
+                    <div class="card-para"><a href="mailto:abhavanishankar2002@gmail.com">my mail id</a></div>
                 </div>
             </div>
         </div>
@@ -293,17 +299,16 @@
             </div>
         </div>
     </div>
-
-    <div class="row section-7-inner mx-auto text-center">
-        <div class="col">
-            <div class="section-7-text">
-                I want to stay in touch with you! Please follow me on social media so we can keep in touch.
-            </div>
-            <div class="section-7-icons">
-                <a href="https://www.linkedin.com/in/abs768/" class="social-icons"><i class="fab fa-linkedin"></i></a>
-                <a href="https://www.instagram.com/a.bhavanishankar2002/" class="social-icons"><i class="fab fa-instagram"></i></a>
-                <a href="https://github.com/abs768" class="social-icons"><i class="fab fa-github"></i></a>
-            </div>
-        </div>
-    </div>
 </section>
+
+<script>
+    function toggleAddress() {
+        var x = document.getElementById("full-address");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+
