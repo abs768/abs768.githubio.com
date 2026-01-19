@@ -1,189 +1,36 @@
 /*
   Portfolio interactions
-  - Typewriter greeting
-  - Custom cursor (sphere -> card bounds, text caret, pointer-lock)
-  - Nav dots active state (IntersectionObserver + hard bottom/top fallback)
-  - Anchor smooth scroll for CTAs
-  - Footer year + graduation badge
+  - Preloader: per-letter flip + sliding window (starts immediately)
+  - Greeting typewriter rotate
+  - Custom cursor (sphere -> card/pointer bounds, text caret)
+  - Nav dots active state (IntersectionObserver + top/bottom fallback)
+  - Smooth anchor scroll
+  - Footer year + graduation status badge
+
+  Versioning:
+  - Update PORTFOLIO_JS_VERSION when you deploy to force yourself to verify cache
 */
-
-// =========================
-// =========================
-// Preloader: per-letter 3D flip + per-letter colors, then reveal page
-// =========================
-// =========================
-// Preloader: per-letter flip (rotation) + colors, then reveal page
-// =========================
-// =========================
-// Preloader: per-letter 3D flip + per-letter colors, then reveal page
-// =========================
-// =========================
-// Preloader: per-letter flip + sliding window highlight, then reveal page
-// =========================
-(() => {
-  const TEXT = "welcome";
-  const COLORS = {
-    0: "#00b4d8",
-    1: "#f72585",
-    2: "#7209b7",
-    3: "#2dd4bf",
-    4: "#a78bfa",
-    5: "#ffffff",
-    6: "#ffffff"
-  };
-
-  const MIN_MS = 900;
-  const STAGGER_MS = 170;
-  const END_PAUSE = 350;
-
-  // sliding window settings
-  const WINDOW_K = 3;
-  const STEP_MS = 190;      // slow this to make it calmer (e.g. 230)
-  const HOLD_MS = 260;
-
-  const root = document.documentElement;
-  root.classList.add("is-loading");
-  document.body.classList.add("is-loading");
-
-  const textEl = document.getElementById("preloaderText");
-  if (!textEl) {
-    root.classList.remove("is-loading");
-    document.body.classList.remove("is-loading");
-    root.classList.add("is-loaded");
-    return;
-  }
-
-  textEl.textContent = "";
-
-  // detect reduced motion
-  const reduceMotion = (() => {
-    try {
-      return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    } catch (_) {
-      return false;
-    }
-  })();
-
-  // read animation duration from CSS (so it stays in sync with your .preloader-letter)
-  const temp = document.createElement("span");
-  temp.className = "preloader-letter";
-  temp.style.position = "absolute";
-  temp.style.visibility = "hidden";
-  temp.textContent = "x";
-  textEl.appendChild(temp);
-
-  const dur = getComputedStyle(temp).animationDuration || "1.2s";
-  const ANIM_MS = dur.includes("ms") ? parseFloat(dur) : parseFloat(dur) * 1000;
-  temp.remove();
-
-  // build letters
-  const letters = [];
-  for (let i = 0; i < TEXT.length; i++) {
-    const span = document.createElement("span");
-    span.textContent = TEXT[i];
-    span.className = "preloader-letter";
-    span.dataset.axis = (i % 2 === 0) ? "x" : "y";
-    span.style.color = COLORS[i] || "#ffffff";
-    span.style.animationDelay = `${i * STAGGER_MS}ms`;
-    textEl.appendChild(span);
-    letters.push(span);
-  }
-
-  const flipTotal = (TEXT.length - 1) * STAGGER_MS + ANIM_MS;
-
-  const finish = () => {
-    root.classList.remove("is-loading");
-    document.body.classList.remove("is-loading");
-    root.classList.add("is-loaded");
-  };
-
-  const runSlidingWindow = () => {
-    return new Promise((resolve) => {
-      if (reduceMotion) return resolve();
-
-      const steps = Math.max(1, TEXT.length - WINDOW_K + 1);
-      const pad = 8;
-
-      // create window rect
-      const win = document.createElement("div");
-      win.className = "sw-window";
-      textEl.appendChild(win);
-
-      const clearActive = () => letters.forEach(l => l.classList.remove("sw-active"));
-
-      const setWindowToRange = (start) => {
-        clearActive();
-        const end = start + WINDOW_K - 1;
-
-        for (let i = start; i <= end; i++) {
-          if (letters[i]) letters[i].classList.add("sw-active");
-        }
-
-        const left = letters[start].offsetLeft;
-        const right = letters[end].offsetLeft + letters[end].offsetWidth;
-        const width = (right - left);
-
-        win.style.opacity = "1";
-        win.style.width = `${Math.max(6, width + pad * 2)}px`;
-        win.style.transform = `translate3d(${left - pad}px, -50%, 0)`;
-      };
-
-      let idx = 0;
-      setWindowToRange(0);
-
-      const t = setInterval(() => {
-        idx++;
-        if (idx >= steps) {
-          clearInterval(t);
-          clearActive();
-
-          // fade out window
-          win.style.opacity = "0";
-
-          setTimeout(() => {
-            win.remove();
-            resolve();
-          }, 240);
-
-          return;
-        }
-        setWindowToRange(idx);
-      }, STEP_MS);
-
-      // tiny hold at the end (feels intentional)
-      setTimeout(() => {}, HOLD_MS);
-    });
-  };
-
-  const start = performance.now();
-
-  window.addEventListener("load", async () => {
-    const elapsed = performance.now() - start;
-
-    // ensure we don't finish too fast
-    const waitForMin = Math.max(0, MIN_MS - elapsed);
-
-    // wait for flip to complete, then run sliding window, then finish
-    setTimeout(async () => {
-      await runSlidingWindow();
-      setTimeout(finish, END_PAUSE);
-    }, Math.max(0, flipTotal, waitForMin));
-  }, { once: true });
-})();
-
 
 (() => {
   'use strict';
 
-  // ✅ toggle this ON to see the debug box bottom-left, OFF to remove
-  const DEBUG_NAV = false;
+  // =========================
+  // Version + cache-bust proof
+  // =========================
+  const PORTFOLIO_JS_VERSION = '2026-01-19.1';
+  const BUILD_STAMP = new Date().toISOString();
 
-  // -----------------------------
+  // Shows up in DevTools Console so you KNOW what file version is running.
+  // (If you don't see this, you're not running the code you think you are.)
+  console.log(`[portfolio.js] loaded v${PORTFOLIO_JS_VERSION} @ ${BUILD_STAMP}`);
+
+  // =========================
   // Helpers
-  // -----------------------------
-  const safeText = (el, text) => {
-    if (!el) return;
-    el.textContent = String(text ?? '');
+  // =========================
+  const on = (el, evt, handler, opts) => {
+    if (!el) return () => {};
+    el.addEventListener(evt, handler, opts);
+    return () => el.removeEventListener(evt, handler, opts);
   };
 
   const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
@@ -196,10 +43,12 @@
     }
   };
 
-  const on = (el, evt, handler, opts) => {
-    if (!el) return () => {};
-    el.addEventListener(evt, handler, opts);
-    return () => el.removeEventListener(evt, handler, opts);
+  const prefersReducedMotion = () => {
+    try {
+      return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    } catch (_) {
+      return false;
+    }
   };
 
   const isNearBottom = (thresholdPx = 12) => {
@@ -218,62 +67,180 @@
     return (window.scrollY || window.pageYOffset) <= thresholdPx;
   };
 
-  // -----------------------------
-  // Nav debug overlay (bottom-left)
-  // -----------------------------
-  function enableNavDebug(dotToSection, sectionsInOrder) {
-    if (!DEBUG_NAV) return () => {};
-
-    const existing = document.getElementById('nav-debug');
-    if (existing) existing.remove();
-
-    const box = document.createElement('div');
-    box.id = 'nav-debug';
-    box.style.cssText = `
-      position: fixed; left: 16px; bottom: 16px; z-index: 99999;
-      background: rgba(0,0,0,0.80); color: #fff;
-      border: 1px solid rgba(255,255,255,0.20);
-      padding: 10px 12px; border-radius: 10px;
-      font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
-      max-width: 420px;
-      pointer-events: none;
-    `;
-    document.body.appendChild(box);
-
-    const dots = [...dotToSection.keys()];
-
-    const render = () => {
-      const activeIdx = dots.findIndex(d => d.classList.contains('active'));
-      const activeDotNum = activeIdx >= 0 ? activeIdx + 1 : 'none';
-      const activeSectionId = activeIdx >= 0 ? (dotToSection.get(dots[activeIdx])?.id || 'missing') : 'none';
-
-      const ids = sectionsInOrder.map(s => s?.id || 'missing').join(', ');
-
-      box.innerHTML = `
-        <div><b>Nav Debug</b></div>
-        <div>Dots: ${dots.length}</div>
-        <div>Sections: ${sectionsInOrder.length}</div>
-        <div>Order: ${ids}</div>
-        <div style="margin-top:6px;">Active dot: ${activeDotNum}</div>
-        <div>Active section: ${activeSectionId}</div>
-        <div style="margin-top:6px; opacity:0.75;">(set DEBUG_NAV=false to remove)</div>
-      `;
+  // =========================
+  // Preloader (START IMMEDIATELY)
+  // =========================
+  function initPreloaderEarly() {
+    const TEXT = 'welcome';
+    const COLORS = {
+      0: '#00b4d8',
+      1: '#f72585',
+      2: '#7209b7',
+      3: '#2dd4bf',
+      4: '#a78bfa',
+      5: '#ffffff',
+      6: '#ffffff',
     };
 
-    render();
-    window.addEventListener('scroll', render, { passive: true });
-    window.addEventListener('resize', render, { passive: true });
+    const MIN_MS = 900;
+    const STAGGER_MS = 170;
+    const END_PAUSE = 350;
 
-    return () => {
-      window.removeEventListener('scroll', render);
-      window.removeEventListener('resize', render);
-      box.remove();
+    const WINDOW_K = 3;
+    const STEP_MS = 220;       // slow/fast window movement
+    const WINDOW_FADE_MS = 240;
+
+    const root = document.documentElement;
+    const body = document.body;
+
+    // Lock scroll immediately
+    root.classList.add('is-loading');
+    body.classList.add('is-loading');
+
+    const reduceMotion = prefersReducedMotion();
+
+    // In case DOM isn't ready yet, we will "wait until preloaderText exists"
+    // BUT we still keep body locked from the start.
+    const startedAt = performance.now();
+
+    let cancelled = false;
+
+    const finish = () => {
+      if (cancelled) return;
+      root.classList.remove('is-loading');
+      body.classList.remove('is-loading');
+      root.classList.add('is-loaded');
     };
+
+    const buildAndRun = () => {
+      const textEl = document.getElementById('preloaderText');
+
+      // If the HTML isn't in the DOM yet, retry shortly.
+      if (!textEl) {
+        // If user removed preloader markup entirely, don't hang forever:
+        // after ~2s, just finish.
+        if (performance.now() - startedAt > 2000) {
+          finish();
+          return;
+        }
+        setTimeout(buildAndRun, 16);
+        return;
+      }
+
+      // Clear
+      textEl.textContent = '';
+
+      // Sync JS with CSS animation-duration of .preloader-letter
+      const temp = document.createElement('span');
+      temp.className = 'preloader-letter';
+      temp.style.position = 'absolute';
+      temp.style.visibility = 'hidden';
+      temp.textContent = 'x';
+      textEl.appendChild(temp);
+
+      const dur = getComputedStyle(temp).animationDuration || '1.2s';
+      const ANIM_MS = dur.includes('ms') ? parseFloat(dur) : parseFloat(dur) * 1000;
+      temp.remove();
+
+      // Build letters
+      const letters = [];
+      for (let i = 0; i < TEXT.length; i++) {
+        const span = document.createElement('span');
+        span.textContent = TEXT[i];
+        span.className = 'preloader-letter';
+        span.dataset.axis = (i % 2 === 0) ? 'x' : 'y';
+        span.style.color = COLORS[i] || '#ffffff';
+        span.style.animationDelay = `${i * STAGGER_MS}ms`;
+        textEl.appendChild(span);
+        letters.push(span);
+      }
+
+      const flipTotal = (TEXT.length - 1) * STAGGER_MS + ANIM_MS;
+
+      const runSlidingWindow = () => new Promise((resolve) => {
+        if (reduceMotion) return resolve();
+
+        const steps = Math.max(1, TEXT.length - WINDOW_K + 1);
+        const pad = 8;
+
+        const win = document.createElement('div');
+        win.className = 'sw-window';
+        textEl.appendChild(win);
+
+        const clearActive = () => letters.forEach(l => l.classList.remove('sw-active'));
+
+        const setWindowToRange = (start) => {
+          clearActive();
+          const end = start + WINDOW_K - 1;
+
+          for (let i = start; i <= end; i++) {
+            if (letters[i]) letters[i].classList.add('sw-active');
+          }
+
+          const left = letters[start].offsetLeft;
+          const right = letters[end].offsetLeft + letters[end].offsetWidth;
+          const width = (right - left);
+
+          win.style.opacity = '1';
+          win.style.width = `${Math.max(6, width + pad * 2)}px`;
+          win.style.transform = `translate3d(${left - pad}px, -50%, 0)`;
+        };
+
+        let idx = 0;
+        setWindowToRange(0);
+
+        const timer = setInterval(() => {
+          idx++;
+          if (idx >= steps) {
+            clearInterval(timer);
+            clearActive();
+            win.style.opacity = '0';
+
+            setTimeout(() => {
+              win.remove();
+              resolve();
+            }, WINDOW_FADE_MS);
+
+            return;
+          }
+          setWindowToRange(idx);
+        }, STEP_MS);
+      });
+
+      // Ensure the preloader doesn't end too fast
+      const elapsed = performance.now() - startedAt;
+      const waitForMin = Math.max(0, MIN_MS - elapsed);
+
+      // Wait for (flip animation) AND minimum duration
+      const wait = Math.max(flipTotal, waitForMin);
+
+      // If page is already fully loaded, we can start countdown immediately.
+      // Otherwise wait for window load so it doesn't disappear before assets are ready.
+      const startSequence = () => {
+        setTimeout(async () => {
+          await runSlidingWindow();
+          setTimeout(finish, END_PAUSE);
+        }, wait);
+      };
+
+      if (document.readyState === 'complete') {
+        startSequence();
+      } else {
+        window.addEventListener('load', startSequence, { once: true });
+      }
+    };
+
+    buildAndRun();
+
+    return () => { cancelled = true; };
   }
 
-  // -----------------------------
-  // Typewriter greeting
-  // -----------------------------
+  // Start preloader RIGHT NOW (as soon as this script loads)
+  const cleanupPreloader = initPreloaderEarly();
+
+  // =========================
+  // Greeting typewriter rotate
+  // =========================
   function initGreetingRotate() {
     const el = document.querySelector('.greeting-rotate');
     if (!el) return () => {};
@@ -306,24 +273,17 @@
       typeWord(greetings[i]);
     }, wordPause);
 
-    const cleanup = () => {
+    return () => {
       if (typingTimer) clearInterval(typingTimer);
       if (rotateTimer) clearInterval(rotateTimer);
       typingTimer = null;
       rotateTimer = null;
     };
-
-    const off1 = on(window, 'pagehide', cleanup, { passive: true });
-
-    return () => {
-      off1();
-      cleanup();
-    };
   }
 
-  // -----------------------------
+  // =========================
   // Custom cursor
-  // -----------------------------
+  // =========================
   function initCursor() {
     const cursor = document.querySelector('.cursor');
     if (!cursor) return () => {};
@@ -350,19 +310,14 @@
     let mx = window.innerWidth / 2;
     let my = window.innerHeight / 2;
 
-    let x = mx - BASE.w / 2;
-    let y = my - BASE.h / 2;
+    let x = -100;
+    let y = -100;
 
     let targetX = x;
     let targetY = y;
 
-    let w = BASE.w;
-    let h = BASE.h;
-    let r = BASE.r;
-
-    let targetW = BASE.w;
-    let targetH = BASE.h;
-    let targetR = BASE.r;
+    let w = BASE.w, h = BASE.h, r = BASE.r;
+    let targetW = BASE.w, targetH = BASE.h, targetR = BASE.r;
 
     let lockedCardEl = null;
     let lockedPointerEl = null;
@@ -389,30 +344,17 @@
       }
     };
 
-    const lockToCard = (el) => {
-      lockedCardEl = el;
-      lockedPointerEl = null;
-      setMode('card');
-
+    const lockToRect = (el, brFallback, nextMode) => {
       const rect = el.getBoundingClientRect();
-      targetX = rect.left; targetY = rect.top;
-      targetW = Math.max(1, rect.width); targetH = Math.max(1, rect.height);
+      targetX = rect.left;
+      targetY = rect.top;
+      targetW = Math.max(1, rect.width);
+      targetH = Math.max(1, rect.height);
 
-      const br = parseFloat(getComputedStyle(el).borderRadius) || 24;
+      const br = parseFloat(getComputedStyle(el).borderRadius) || brFallback;
       targetR = clamp(br, 0, 999);
-    };
 
-    const lockToPointer = (el) => {
-      lockedPointerEl = el;
-      lockedCardEl = null;
-      setMode('pointerlock');
-
-      const rect = el.getBoundingClientRect();
-      targetX = rect.left; targetY = rect.top;
-      targetW = Math.max(1, rect.width); targetH = Math.max(1, rect.height);
-
-      const br = parseFloat(getComputedStyle(el).borderRadius) || 14;
-      targetR = clamp(br, 0, 999);
+      setMode(nextMode);
     };
 
     const unlockAll = () => {
@@ -430,18 +372,21 @@
 
       const card = t.closest(CARD_SEL);
       if (card) {
-        if (lockedCardEl !== card) lockToCard(card);
+        lockedCardEl = card;
+        lockedPointerEl = null;
+        lockToRect(card, 24, 'card');
         return;
       }
 
       const pointerEl = t.closest(POINTER_SEL);
       if (pointerEl) {
-        if (lockedPointerEl !== pointerEl) lockToPointer(pointerEl);
+        lockedPointerEl = pointerEl;
+        lockedCardEl = null;
+        lockToRect(pointerEl, 14, 'pointerlock');
         return;
       }
 
-      const isText =
-        (typeof t.matches === 'function' && t.matches(TEXT_SEL)) || !!t.closest(TEXT_SEL);
+      const isText = (typeof t.matches === 'function' && t.matches(TEXT_SEL)) || !!t.closest(TEXT_SEL);
       if (isText) {
         unlockAll();
         setMode('text');
@@ -484,17 +429,9 @@
     const tick = () => {
       try {
         if (lockedCardEl) {
-          const rect = lockedCardEl.getBoundingClientRect();
-          targetX = rect.left; targetY = rect.top;
-          targetW = Math.max(1, rect.width); targetH = Math.max(1, rect.height);
-          const br = parseFloat(getComputedStyle(lockedCardEl).borderRadius) || 24;
-          targetR = clamp(br, 0, 999);
+          lockToRect(lockedCardEl, 24, 'card');
         } else if (lockedPointerEl) {
-          const rect = lockedPointerEl.getBoundingClientRect();
-          targetX = rect.left; targetY = rect.top;
-          targetW = Math.max(1, rect.width); targetH = Math.max(1, rect.height);
-          const br = parseFloat(getComputedStyle(lockedPointerEl).borderRadius) || 14;
-          targetR = clamp(br, 0, 999);
+          lockToRect(lockedPointerEl, 14, 'pointerlock');
         } else {
           targetX = mx - targetW / 2;
           targetY = my - targetH / 2;
@@ -530,28 +467,23 @@
 
     tick();
 
-    const cleanup = () => {
+    return () => {
       if (raf) cancelAnimationFrame(raf);
       raf = 0;
       off.forEach(fn => fn());
     };
-
-    const offHide = on(window, 'pagehide', cleanup, { passive: true });
-
-    return () => {
-      offHide();
-      cleanup();
-    };
   }
 
-  // -----------------------------
-  // Nav dots (IO + hard bottom/top fallback)
-  // -----------------------------
+  // =========================
+  // Nav dots
+  // =========================
   function initNavDots() {
+    const nav = document.querySelector('.nav-dots');
+    if (nav && getComputedStyle(nav).display === 'none') return () => {};
+
     const dots = Array.from(document.querySelectorAll('.nav-dot'));
     if (!dots.length) return () => {};
 
-    // Build sections IN THE SAME ORDER AS DOTS (important)
     const dotToSection = new Map();
     const sections = [];
 
@@ -566,10 +498,7 @@
       sections.push(sec);
     });
 
-    if (!dotToSection.size) return () => {};
-
-    // ✅ debug overlay should be called like this (sections exists)
-    const debugCleanup = enableNavDebug(dotToSection, sections);
+    if (!sections.length) return () => {};
 
     const sectionToDot = new Map();
     for (const [dot, sec] of dotToSection.entries()) sectionToDot.set(sec, dot);
@@ -580,22 +509,12 @@
       if (dot) dot.classList.add('active');
     };
 
-    // Track visibility ratios
     const ratios = new Map();
 
     const chooseActive = () => {
-      // Hard top/bottom guarantees first/last dot always hit
-      if (isNearTop(8)) {
-        if (sections[0]) setActiveDot(sections[0]);
-        return;
-      }
-      if (isNearBottom(8)) {
-        const last = sections[sections.length - 1];
-        if (last) setActiveDot(last);
-        return;
-      }
+      if (isNearTop(8)) return setActiveDot(sections[0]);
+      if (isNearBottom(8)) return setActiveDot(sections[sections.length - 1]);
 
-      // Otherwise pick the most visible section
       let best = null;
       let bestRatio = 0;
 
@@ -607,10 +526,10 @@
         }
       }
 
-      // Fallback: nearest to viewport anchor if IO gives nothing
       if (!best) {
         const anchorY = window.innerHeight * 0.35;
         let minDist = Infinity;
+
         for (const sec of sections) {
           const rect = sec.getBoundingClientRect();
           const dist = Math.abs(rect.top - anchorY);
@@ -637,6 +556,8 @@
 
     sections.forEach(sec => io.observe(sec));
 
+    const off = [];
+
     const onDotClick = (e) => {
       const dot = e.currentTarget;
       const href = dot.getAttribute('href');
@@ -647,14 +568,12 @@
 
       e.preventDefault();
       target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setActiveDot(target); // immediate feedback
+      setActiveDot(target);
       try { history.pushState(null, '', href); } catch (_) {}
     };
 
-    const off = [];
     dots.forEach(dot => off.push(on(dot, 'click', onDotClick, { passive: false })));
 
-    // Bottom/top fallback requires scroll/resize too
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
@@ -674,18 +593,17 @@
       try { io.disconnect(); } catch (_) {}
       off.forEach(fn => fn());
       ratios.clear();
-      if (debugCleanup) debugCleanup();
     };
   }
 
-  // -----------------------------
-  // Anchor scroll (CTAs)
-  // -----------------------------
+  // =========================
+  // Smooth anchor scroll (CTAs)
+  // =========================
   function initAnchorScroll() {
     const anchors = Array.from(document.querySelectorAll('a[href^="#"]:not(.nav-dot)'));
     if (!anchors.length) return () => {};
 
-    const onAnchorClick = (e) => {
+    const handler = (e) => {
       const a = e.currentTarget;
       const href = a.getAttribute('href');
       if (!href || href === '#') return;
@@ -698,17 +616,17 @@
       try { history.pushState(null, '', href); } catch (_) {}
     };
 
-    const off = anchors.map(a => on(a, 'click', onAnchorClick, { passive: false }));
+    const off = anchors.map(a => on(a, 'click', handler, { passive: false }));
     return () => off.forEach(fn => fn());
   }
 
-  // -----------------------------
-  // Footer + status
-  // -----------------------------
+  // =========================
+  // Footer year + status
+  // =========================
   function updateYear() {
     const el = document.querySelector('#copyright-year');
     if (!el) return;
-    safeText(el, `© ${new Date().getFullYear()} bhavani shankar ajith`);
+    el.textContent = `© ${new Date().getFullYear()} bhavani shankar ajith`;
   }
 
   function updateStatusBadge() {
@@ -724,22 +642,25 @@
     `;
   }
 
-  // -----------------------------
-  // Boot
-  // -----------------------------
-  const boot = () => {
+  // =========================
+  // Boot (WAIT FOR DOM)
+  // =========================
+  function boot() {
     const cleanups = [];
+
     cleanups.push(initGreetingRotate());
     cleanups.push(initCursor());
     cleanups.push(initNavDots());
     cleanups.push(initAnchorScroll());
+
     updateYear();
     updateStatusBadge();
 
     on(window, 'pagehide', () => {
+      try { cleanupPreloader(); } catch (_) {}
       cleanups.forEach(fn => { try { fn(); } catch (_) {} });
     }, { passive: true });
-  };
+  }
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot, { once: true });

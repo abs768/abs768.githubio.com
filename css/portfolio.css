@@ -922,3 +922,143 @@ body.has-cursor {
   html { scroll-behavior: auto; }
   .btn-primary, .btn-secondary, .project-link, .contact-card, .cert-card { transition: none; }
 }
+
+
+/* =========================
+   Mobile UI Overrides
+   (safe: only applies <= 640px)
+========================= */
+@media (max-width: 640px) {
+
+  /* Global spacing + typography */
+  .container {
+    width: calc(100% - 28px);
+  }
+
+  .section {
+    padding: 72px 0; /* was 104px */
+  }
+
+  #home.section {
+    min-height: auto;         /* don't force 100vh on mobile */
+    padding-top: 88px;        /* comfortable top spacing */
+    padding-bottom: 56px;
+  }
+
+  .display-heading {
+    font-size: clamp(34px, 10vw, 54px);
+    line-height: 1.02;
+    letter-spacing: -0.6px;
+  }
+
+  .intro-text {
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .cta-buttons {
+    gap: 12px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;              /* stack buttons */
+    justify-content: center;
+    padding: 14px 16px;
+    border-radius: 14px;
+  }
+
+  /* Hide nav dots on mobile (they annoy users, block taps, waste width) */
+  .nav-dots {
+    display: none;
+  }
+
+  /* Grids: tighter cards + better density */
+  .principle-card,
+  .project-card,
+  .timeline-item,
+  .cert-card,
+  .contact-card,
+  .tech-stack {
+    border-radius: 18px;
+  }
+
+  .principles-grid {
+    gap: 14px;
+  }
+
+  .projects-grid {
+    gap: 14px;
+  }
+
+  .project-content {
+    padding: 16px;
+  }
+
+  .project-description {
+    font-size: 13.5px;
+  }
+
+  /* Project metrics: 1 column on phones (2 columns becomes cramped) */
+  .project-metrics {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .metric {
+    padding: 12px 14px;
+  }
+
+  /* Timeline: remove fixed left column width */
+  .timeline-item {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .timeline-year {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  /* Cert + contact: 1 column is already set, reduce padding */
+  .cert-card,
+  .contact-card {
+    padding: 14px;
+    grid-template-columns: 52px 1fr;
+    gap: 12px;
+  }
+
+  .cert-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+
+  .contact-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+  }
+
+  /* Tech tags: reduce padding so they don’t wrap awkwardly */
+  .stack-tags span,
+  .project-stack span,
+  .timeline-stack span {
+    padding: 7px 9px;
+    font-size: 11.5px;
+  }
+
+  /* Footer: stack, center */
+  .footer {
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Preloader: reduce size slightly */
+  .preloader-type {
+    font-size: clamp(24px, 9vw, 56px);
+  }
+}
+/* =========================
+   End of Portfolio Styles
