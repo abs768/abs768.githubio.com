@@ -1,334 +1,532 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bhavani Shankar Ajith - Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="./css/portfolio.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bhavani shankar ajith - software engineer</title>
+
+  <!-- SEO -->
+  <meta name="description" content="software engineer building reliable systems at 3am. spring boot, kafka, rag, distributed systems. stony brook graduate with production experience.">
+  <meta name="keywords" content="software engineer, backend developer, spring boot, kafka, data engineering, rag, microservices, distributed systems, stony brook">
+  <meta name="author" content="Bhavani Shankar Ajith">
+  <meta name="robots" content="index, follow">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Bhavani Shankar Ajith - Software Engineer">
+  <meta property="og:description" content="Building reliable systems at 3am. Spring Boot • Kafka • RAG • Distributed Systems">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:image" content="https://abs768.github.io/images/DocGPT.png">
+
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./favicon.ico">
+
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/portfolio.css">
 </head>
+
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-brand">HELLO...</div>
-        <ul class="nav-menu">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#resume">Resume</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
+  <!-- Custom Cursor -->
+  <div class="cursor" aria-hidden="true" role="presentation"></div>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="hero-overlay"></div>
-        <div class="hero-content">
-            <h1 class="hero-title">I'm Bhavani Shankar Ajith</h1>
-            <p class="hero-tagline">Software Engineer & Data Scientist</p>
-            <p class="hero-subtitle">Master's in Data Science @ SUNY Stony Brook</p>
-            <p class="hero-description">Building scalable backend systems and AI-powered solutions | Spring Boot • Python • Cloud • ML</p>
-            <div class="hero-buttons">
-                <a href="#about" class="btn btn-primary">Learn More</a>
-                <a href="./Bhavani_Resume.pdf" target="_blank" class="btn btn-outline-white">View Resume</a>
+  <!-- Navigation Dots -->
+  <nav class="nav-dots" aria-label="Section navigation" role="navigation">
+    <a href="#home" class="nav-dot active" data-section="home" aria-label="Navigate to home section"></a>
+    <a href="#build" class="nav-dot" data-section="build" aria-label="Navigate to philosophy section"></a>
+    <a href="#work" class="nav-dot" data-section="work" aria-label="Navigate to work section"></a>
+    <a href="#background" class="nav-dot" data-section="background" aria-label="Navigate to background section"></a>
+    <a href="#connect" class="nav-dot" data-section="connect" aria-label="Navigate to contact section"></a>
+  </nav>
+
+  <!-- Home Section -->
+  <section id="home" class="section">
+    <div class="container">
+      <div class="status-badge" role="status">
+        <span class="status-dot" aria-hidden="true"></span>
+        open to opportunities • graduating may 2026
+      </div>
+
+      <h1 class="display-heading">
+        <span class="greeting-rotate" aria-label="greeting"></span><br>
+        i'm<br>
+        bhavani.
+      </h1>
+
+      <p class="intro-text">
+        I build backend systems that stay correct when conditions are messy: retries, timeouts, edge cases, and real data.
+        I care about predictable performance, tight data boundaries, and tests that prove the system behaves under stress.
+      </p>
+
+      <div class="cta-buttons">
+        <a href="#work" class="btn-primary" aria-label="View my projects">&rarr; view projects</a>
+        <a href="#connect" class="btn-secondary" aria-label="Get in touch">get in touch</a>
+        <a href="Bhavani_Resume.pdf" target="_blank" rel="noopener" class="btn-secondary" aria-label="Open resume (PDF)">resume</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Philosophy Section -->
+  <section id="build" class="section">
+    <div class="container">
+      <h2 class="section-title">philosophy</h2>
+
+      <p class="section-description">
+        I engineer for real production conditions: partial failures, inconsistent inputs, and the need to recover fast.
+        The goal is boring reliability - not impressive demos.
+      </p>
+
+      <div class="principles-grid">
+        <!-- Principle 1 -->
+        <article class="principle-card">
+          <div class="principle-icon" aria-hidden="true" role="img" aria-label="Testing architecture icon">
+            <svg viewBox="0 0 80 80" width="80" height="80">
+              <defs>
+                <linearGradient id="grad-testing" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#00b4d8;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#0077b6;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <rect x="15" y="15" width="50" height="50" rx="6" fill="none" stroke="url(#grad-testing)" stroke-width="2.5"/>
+              <circle cx="30" cy="30" r="4" fill="url(#grad-testing)"/>
+              <path d="M 32 30 L 48 46" stroke="url(#grad-testing)" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="50" cy="48" r="4" fill="url(#grad-testing)"/>
+            </svg>
+          </div>
+          <div class="principle-number" aria-label="Principle 1">01</div>
+          <h3>testing as architecture</h3>
+          <p>Reliability is designed. I lean on integration tests to catch the failures mocks hide.</p>
+        </article>
+
+        <!-- Principle 2 -->
+        <article class="principle-card">
+          <div class="principle-icon" aria-hidden="true" role="img" aria-label="Data integrity icon">
+            <svg viewBox="0 0 80 80" width="80" height="80">
+              <defs>
+                <linearGradient id="grad-data" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#7209b7;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#560bad;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <circle cx="40" cy="40" r="25" fill="none" stroke="url(#grad-data)" stroke-width="2.5"/>
+              <circle cx="40" cy="40" r="17" fill="none" stroke="url(#grad-data)" stroke-width="2"/>
+              <circle cx="40" cy="40" r="9" fill="none" stroke="url(#grad-data)" stroke-width="2"/>
+              <circle cx="40" cy="40" r="3" fill="url(#grad-data)"/>
+            </svg>
+          </div>
+          <div class="principle-number" aria-label="Principle 2">02</div>
+          <h3>uncompromising integrity</h3>
+          <p>I treat data boundaries like security boundaries: explicit filters, audit trails, and predictable writes.</p>
+        </article>
+
+        <!-- Principle 3 -->
+        <article class="principle-card">
+          <div class="principle-icon" aria-hidden="true" role="img" aria-label="Resilient design icon">
+            <svg viewBox="0 0 80 80" width="80" height="80">
+              <defs>
+                <linearGradient id="grad-fault" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" style="stop-color:#f72585;stop-opacity:1" />
+                  <stop offset="100%" style="stop-color:#b5179e;stop-opacity:1" />
+                </linearGradient>
+              </defs>
+              <path d="M 25 50 Q 30 30, 40 35 T 55 50" fill="none" stroke="url(#grad-fault)" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="25" cy="50" r="4" fill="url(#grad-fault)"/>
+              <circle cx="40" cy="35" r="4" fill="url(#grad-fault)"/>
+              <circle cx="55" cy="50" r="4" fill="url(#grad-fault)"/>
+              <path d="M 20 55 L 60 55" stroke="url(#grad-fault)" stroke-width="1.5" stroke-dasharray="2,3" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="principle-number" aria-label="Principle 3">03</div>
+          <h3>resilient design</h3>
+          <p>Systems will fail. I design for recovery: retries, timeouts, fallbacks, and clear observability.</p>
+        </article>
+      </div>
+
+      <!-- Tech Stack -->
+      <div class="tech-stack">
+        <div class="stack-label">toolkit -</div>
+        <div class="stack-categories">
+          <div class="stack-category">
+            <span class="category-name">backend &amp; apis</span>
+            <div class="stack-tags">
+              <span>spring boot</span>
+              <span>fastapi</span>
+              <span>rest apis</span>
+              <span>microservices</span>
+              <span>jwt auth</span>
             </div>
+          </div>
+
+          <div class="stack-category">
+            <span class="category-name">data engineering</span>
+            <div class="stack-tags">
+              <span>kafka</span>
+              <span>airflow</span>
+              <span>dbt</span>
+              <span>etl pipelines</span>
+            </div>
+          </div>
+
+          <div class="stack-category">
+            <span class="category-name">databases</span>
+            <div class="stack-tags">
+              <span>postgresql</span>
+              <span>snowflake</span>
+              <span>qdrant</span>
+              <span>mysql</span>
+            </div>
+          </div>
+
+          <div class="stack-category">
+            <span class="category-name">infrastructure</span>
+            <div class="stack-tags">
+              <span>docker</span>
+              <span>gcp</span>
+              <span>aws</span>
+              <span>testcontainers</span>
+              <span>ci/cd</span>
+            </div>
+          </div>
+
+          <div class="stack-category">
+            <span class="category-name">ai/ml</span>
+            <div class="stack-tags">
+              <span>tensorflow</span>
+              <span>tensorrt</span>
+              <span>pytorch</span>
+              <span>ollama</span>
+              <span>rag</span>
+            </div>
+          </div>
+
+          <div class="stack-category">
+            <span class="category-name">languages</span>
+            <div class="stack-tags">
+              <span>java</span>
+              <span>python</span>
+              <span>sql</span>
+              <span>javascript</span>
+              <span>c++</span>
+            </div>
+          </div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- About Section -->
-    <section id="about" class="about-section">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-image">
-                    <img src="./images/Bhavani.jpg" alt="Bhavani Shankar Ajith">
-                </div>
-                <div class="about-text">
-                    <p>I embarked on my data science journey during my undergraduate studies at SRM University, where I pursued a Bachelor of Technology in Computer Science Engineering with a specialization in Artificial Intelligence and Machine Learning. This foundation spurred my passion for advanced data analysis and algorithm development, leading me to explore diverse projects involving plant disease classification, real estate price prediction, and customer churn prediction.</p>
-                    
-                    <p>Proficient in tool skills such as Python, SQL, Basic Data Structures and Algorithms, Pandas, and fundamentals of Machine Learning, Deep Learning, Computer Vision, and NLP, I leverage robust technical skills to transform complex data into actionable insights. My core competencies extend to a solid grounding in Computer Science fundamentals, along with a strong grasp of Math and Statistics, which are complemented by effective communication skills and business acumen.</p>
-                    
-                    <p>Driven by a zeal for turning data into valuable insights, I am eager to contribute to forward-thinking data science initiatives. With aspirations to evolve into roles such as Machine Learning Tech Lead, Research Manager, Analytics Manager, and eventually Product Manager, I am committed to leveraging both personal and professional experiences to impact the industry profoundly.</p>
-                </div>
+  <!-- Work Section -->
+  <section id="work" class="section">
+    <div class="container">
+      <h2 class="section-title">work</h2>
+
+      <p class="section-description">
+        Selected projects that reflect my default style: clear boundaries, reliable pipelines, and measurable behavior.
+      </p>
+
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="./images/DocGPT.png" alt="intelligent-doc-rag interface screenshot" class="project-image" loading="lazy" width="800" height="450">
+            <div class="project-overlay">
+              <span class="project-tag">featured</span>
             </div>
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">intelligent-doc-rag</h3>
+            <p class="project-description">
+              A RAG system built as a set of microservices. Spring Boot + Qdrant (768-dim HNSW) + local inference (Llama 3.x)
+              for low-latency, private document Q&amp;A with semantic chunking.
+            </p>
+
+            <div class="project-metrics" role="list">
+              <div class="metric" role="listitem">
+                <span class="metric-value">100k+</span>
+                <span class="metric-label">chunks processed</span>
+              </div>
+              <div class="metric" role="listitem">
+                <span class="metric-value">&lt;100ms</span>
+                <span class="metric-label">vector search</span>
+              </div>
+              <div class="metric" role="listitem">
+                <span class="metric-value">70%</span>
+                <span class="metric-label">test coverage</span>
+              </div>
+              <div class="metric" role="listitem">
+                <span class="metric-value">3-8s</span>
+                <span class="metric-label">response time</span>
+              </div>
+            </div>
+
+            <div class="project-stack" role="list" aria-label="Technologies used">
+              <span>spring boot</span>
+              <span>qdrant</span>
+              <span>postgresql</span>
+              <span>react</span>
+              <span>docker</span>
+              <span>ollama</span>
+              <span>testcontainers</span>
+            </div>
+
+            <div class="project-insight">
+              <strong>technical challenge</strong>
+              <p>
+                Found a data isolation hole: ID-only filters could still leak cross-user documents. Fixed it with composite filters
+                (User ID + Document ID) and regression tests that prove the boundary.
+              </p>
+            </div>
+
+            <div class="project-links">
+              <a href="https://github.com/abs768/intelligent-doc-rag" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View source code on GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i> source
+              </a>
+              <a href="https://github.com/abs768/intelligent-doc-rag#readme" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Read documentation">
+                documentation <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card">
+          <div class="project-image-container">
+            <img src="./images/Dashboard.png" alt="MarketPulse analytics dashboard screenshot" class="project-image" loading="lazy" width="800" height="450">
+            <div class="project-overlay">
+              <span class="project-tag">pipeline</span>
+            </div>
+          </div>
+
+          <div class="project-content">
+            <h3 class="project-title">marketpulse</h3>
+            <p class="project-description">
+              An event-driven streaming analytics platform for real-time stock data.
+              Kafka + MinIO feeding Snowflake, with layered dbt transformations for stable analytics.
+            </p>
+
+            <div class="project-metrics" role="list">
+              <div class="metric" role="listitem">
+                <span class="metric-value">3k+</span>
+                <span class="metric-label">records/sec</span>
+              </div>
+              <div class="metric" role="listitem">
+                <span class="metric-value">96%</span>
+                <span class="metric-label">uptime</span>
+              </div>
+              <div class="metric" role="listitem">
+                <span class="metric-value">31s</span>
+                <span class="metric-label">mean dag time</span>
+              </div>
+              <div class="metric" role="listitem">
+                <span class="metric-value">16x</span>
+                <span class="metric-label">latency reduced</span>
+              </div>
+            </div>
+
+            <div class="project-stack" role="list" aria-label="Technologies used">
+              <span>kafka</span>
+              <span>snowflake</span>
+              <span>dbt</span>
+              <span>airflow</span>
+              <span>python</span>
+              <span>minio</span>
+              <span>streamlit</span>
+            </div>
+
+            <div class="project-insight">
+              <strong>production insight</strong>
+              <p>
+                Cold-starts in the warehouse were tripping tight DAG timeouts. Added warmup queries and tuned timeouts to stabilize
+                runs at 96% success.
+              </p>
+            </div>
+
+            <div class="project-links">
+              <a href="https://github.com/abs768/MarketPulse-Real-Time-Stock-Pipeline" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="View source code on GitHub">
+                <i class="fab fa-github" aria-hidden="true"></i> source
+              </a>
+              <a href="https://github.com/abs768/MarketPulse-Real-Time-Stock-Pipeline#readme" target="_blank" rel="noopener noreferrer" class="project-link" aria-label="Read documentation">
+                documentation <i class="fas fa-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="more-projects">
+        <a href="https://github.com/abs768?tab=repositories" target="_blank" rel="noopener noreferrer" class="text-link" aria-label="View more projects on GitHub">
+          &rarr; view more on github
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Background Section -->
+  <section id="background" class="section">
+    <div class="container">
+      <h2 class="section-title">background</h2>
+
+      <p class="section-description">
+        Graduating May 2026. Looking for software engineering roles where reliability, clarity, and ownership actually matter.
+      </p>
+
+      <!-- Experience -->
+      <div class="experience-section">
+        <h3 class="subsection-title">experience</h3>
+
+        <div class="timeline">
+          <article class="timeline-item">
+            <div class="timeline-year" aria-label="Year 2025">2025</div>
+            <div class="timeline-content">
+              <h4>software engineer intern</h4>
+              <p class="timeline-company">navitas business consulting &middot; herndon, va</p>
+              <ul class="timeline-points">
+                <li>Automated enrollment workflows for ~184,000 employees, reducing manual effort by ~40%.</li>
+                <li>Built an integration test suite with Testcontainers to validate behavior against real dependencies.</li>
+                <li>Hardened data integrity with PostgreSQL triggers and audit logging for critical changes.</li>
+              </ul>
+              <div class="timeline-stack" role="list" aria-label="Technologies used">
+                <span>spring boot</span>
+                <span>postgresql</span>
+                <span>testcontainers</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="timeline-item">
+            <div class="timeline-year" aria-label="Year 2022">2022</div>
+            <div class="timeline-content">
+              <h4>deep learning apprentice</h4>
+              <p class="timeline-company">nvidia jetson ai training &middot; chennai</p>
+              <ul class="timeline-points">
+                <li>Reduced edge inference latency from ~250ms to under ~100ms using TensorRT optimizations.</li>
+                <li>Profiled with Nsight Systems and reduced CPU-GPU overhead by ~40% through pipeline tuning.</li>
+              </ul>
+              <div class="timeline-stack" role="list" aria-label="Technologies used">
+                <span>python</span>
+                <span>cuda</span>
+                <span>tensorrt</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="timeline-item education">
+            <div class="timeline-year" aria-label="Year 2026">2026</div>
+            <div class="timeline-content">
+              <h4>ms in data science</h4>
+              <p class="timeline-company">stony brook university &middot; gpa: 3.73/4.00</p>
+            </div>
+          </article>
+
+          <article class="timeline-item education">
+            <div class="timeline-year" aria-label="Year 2024">2024</div>
+            <div class="timeline-content">
+              <h4>btech computer science</h4>
+              <p class="timeline-company">srm institute &middot; gpa: 9.66/10.0</p>
+            </div>
+          </article>
         </div>
-    </section>
+      </div>
 
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="stats-grid">
-                <a href="#project-url-shortener" class="stat-card stat-card-link">
-                    <div class="stat-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <div class="stat-label">Fast Learner</div>
-                    <div class="stat-detail">Mastered Redis caching in 2 weeks</div>
-                    <div class="stat-proof">75% query optimization • Self-taught</div>
-                </a>
-                <a href="#experience-navitas" class="stat-card stat-card-link">
-                    <div class="stat-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="stat-label">Dependable</div>
-                    <div class="stat-detail">Production APIs serving 184K+ users</div>
-                    <div class="stat-proof">Zero downtime • Trusted with critical systems</div>
-                </a>
-                <a href="#experience-nvidia" class="stat-card stat-card-link">
-                    <div class="stat-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="stat-label">Performance-Driven</div>
-                    <div class="stat-detail">Edge AI optimized to &lt;100ms</div>
-                    <div class="stat-proof">87% accuracy • Real-time inference</div>
-                </a>
-                <a href="#education-section" class="stat-card stat-card-link">
-                    <div class="stat-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="stat-label">High Achiever</div>
-                    <div class="stat-detail">3.71 GPA at SUNY Stony Brook</div>
-                    <div class="stat-proof">3.90 undergrad GPA • Published researcher</div>
-                </a>
+      <!-- Certifications -->
+      <div class="certifications-section">
+        <h3 class="subsection-title">certifications</h3>
+
+        <div class="cert-grid">
+          <a class="cert-card" href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=A6D3C5836285C78A5DBAE3331CAF2F3472BD2AC01DF00A08135474BDF8112A05" target="_blank" rel="noopener noreferrer" aria-label="View OCI Generative AI Professional badge">
+            <div class="cert-icon" aria-hidden="true" role="img" aria-label="Certification badge">
+              <svg viewBox="0 0 60 60" width="48" height="48">
+                <circle cx="30" cy="30" r="20" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M30 15 L35 25 L45 27 L37 35 L39 45 L30 40 L21 45 L23 35 L15 27 L25 25 Z" fill="currentColor"/>
+              </svg>
             </div>
+            <div>
+              <h4>OCI Generative AI Professional</h4>
+              <p class="cert-issuer">oracle cloud infrastructure &middot; 2025</p>
+            </div>
+          </a>
+
+          <a class="cert-card" href="https://catalog-education.oracle.com/ords/certview/sharebadge?id=C667539D76EB6F0569A4015350B52757695C76CA8827284FA706AD5B3D7E9BC0" target="_blank" rel="noopener noreferrer" aria-label="View OCI Data Science Professional badge">
+            <div class="cert-icon" aria-hidden="true" role="img" aria-label="Certification badge">
+              <svg viewBox="0 0 60 60" width="48" height="48">
+                <rect x="15" y="20" width="30" height="25" rx="2" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M20 30 L25 35 L35 25" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="15" y="15" width="30" height="5" fill="currentColor"/>
+              </svg>
+            </div>
+            <div>
+              <h4>OCI Data Science Professional</h4>
+              <p class="cert-issuer">oracle cloud infrastructure &middot; 2025</p>
+            </div>
+          </a>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <!-- Resume Section -->
-    <!-- Resume Section -->
-    <section id="resume" class="resume-section">
-        <div class="container">
-            <h2 class="section-title">Resume</h2>
-            <p class="section-subtitle">Graduate student pursuing M.S. in Data Science with practical experience in software engineering and AI systems.</p>
-            <div class="resume-download">
-                <a href="./Bhavani_Resume.pdf" target="_blank" class="btn btn-download">
-                    <i class="fas fa-file-pdf"></i> View Full Resume (PDF)
-                </a>
-            </div>
-            
-            <div class="resume-container">
-                <!-- LEFT COLUMN -->
-                <div class="resume-column">
-                    <div class="resume-block" id="education-section">
-                        <h3 class="resume-heading">Education</h3>
-                        <div class="resume-item">
-                            <h4>M.S. in Data Science</h4>
-                            <p class="resume-year">Expected: May 2026</p>
-                            <p class="resume-institution">Stony Brook University (SUNY), Stony Brook, NY</p>
-                            <p class="resume-gpa">GPA: 3.71 / 4.00</p>
-                        </div>
-                        
-                        <div class="resume-item">
-                            <h4>B.Tech in Computer Science (AI and ML)</h4>
-                            <p class="resume-year">Graduated: June 2024</p>
-                            <p class="resume-institution">SRM Institute of Science and Technology, Chennai, India</p>
-                            <p class="resume-gpa">GPA: 3.90 / 4.00</p>
-                        </div>
-                    </div>
+  <!-- Contact Section -->
+  <section id="connect" class="section">
+    <div class="container">
+      <h2 class="section-title">contact</h2>
 
-                    <div class="resume-block">
-                        <h3 class="resume-heading">Skills</h3>
-                        <div class="resume-item">
-                            <ul class="skills-list">
-                                <li><strong>Programming Languages:</strong> Java, Python, SQL, JavaScript, C++, CUDA</li>
-                                <li><strong>Backend & Web:</strong> Spring Boot, REST APIs, Flask, Node.js, microservices architecture</li>
-                                <li><strong>Databases:</strong> PostgreSQL, MySQL; schema design, transactions, query optimization, indexing</li>
-                                <li><strong>Tools & DevOps:</strong> Git, Docker, Linux, JUnit, PyTest, CI/CD workflows</li>
-                                <li><strong>Cloud & Other:</strong> AWS, Azure, system design fundamentals</li>
-                                <li><strong>Performance Optimization:</strong> TensorRT, GPU profiling (Nsight Systems), hardware acceleration, memory optimization</li>
-                            </ul>
-                        </div>
-                    </div>
+      <p class="section-description">
+        Reach out if you're hiring for backend / data engineering roles, or want to talk systems.
+      </p>
 
-                    <div class="resume-block">
-                        <h3 class="resume-heading">Projects</h3>
-                        
-                        <div class="resume-item" id="project-url-shortener">
-                            <h4>URL Shortener Service</h4>
-                            <p class="resume-year">December 2024 - Present</p>
-                            <p class="resume-tech"><em>Python, Flask, PostgreSQL, Redis</em></p>
-                            <ul class="resume-bullets">
-                                <li>Built scalable URL shortening service with custom short-link generation algorithm using base62 encoding; implemented collision detection and resolution for hash conflicts</li>
-                                <li>Designed REST API with PostgreSQL for persistent storage and Redis caching layer to reduce database queries by 75% for frequently accessed URLs</li>
-                                <li>Added analytics tracking for click-through rates, geographic distribution, and referrer data; implemented rate limiting to prevent abuse and expiration mechanism for temporary links</li>
-                                <li>Deployed on cloud infrastructure with environment-based configuration management and comprehensive API documentation</li>
-                            </ul>
-                        </div>
+      <div class="contact-grid">
+        <a href="mailto:bhavanishankar.ajith@stonybrook.edu" class="contact-card" aria-label="Send email">
+          <div class="contact-icon" aria-hidden="true" role="img" aria-label="Email icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label">email</span>
+            <span class="contact-value">send a message</span>
+          </div>
+        </a>
 
-                        <div class="resume-item">
-                            <h4>Natural Language to SQL Query System</h4>
-                            <p class="resume-year">September 2024 - November 2024</p>
-                            <p class="resume-tech"><em>Python, Flask, PostgreSQL</em></p>
-                            <ul class="resume-bullets">
-                                <li>Built REST API service that translates natural language queries into SQL using LLM integration and executes them against relational databases; implemented authentication, request validation, and structured error handling for 12+ query patterns</li>
-                                <li>Designed safety mechanisms including input sanitization, query validation, parameterized queries to prevent SQL injection, and retry logic for malformed outputs, improving request success rate by 65%</li>
-                                <li>Containerized application with Docker and documented deployment process for reproducible setup across development and production environments</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+        <a href="https://www.linkedin.com/in/abs768/" target="_blank" rel="noopener noreferrer" class="contact-card" aria-label="Connect on LinkedIn">
+          <div class="contact-icon" aria-hidden="true" role="img" aria-label="LinkedIn icon">
+            <i class="fab fa-linkedin"></i>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label">linkedin</span>
+            <span class="contact-value">connect</span>
+          </div>
+        </a>
 
-                <!-- RIGHT COLUMN -->
-                <div class="resume-column">
-                    <div class="resume-block">
-                        <h3 class="resume-heading">Experience</h3>
-                        
-                        <div class="resume-item" id="experience-navitas">
-                            <h4>Software Engineer Intern</h4>
-                            <p class="resume-year">June 2025 - August 2025</p>
-                            <p class="resume-institution">Navitas Business Consulting, Virginia</p>
-                            <p class="resume-tech"><em>Spring Boot, PostgreSQL, JUnit</em></p>
-                            <ul class="resume-bullets">
-                                <li>Developed and deployed Spring Boot REST APIs for member eligibility validation and enrollment workflows supporting 184,000+ active members across multiple health plans</li>
-                                <li>Built PostgreSQL triggers and constraints to automatically track enrollment changes and document updates, eliminating manual data reconciliation and improving audit compliance</li>
-                                <li>Implemented schema migration strategy using Flyway with version control and rollback mechanisms, enabling safe database deployments across development, staging, and production environments</li>
-                                <li>Wrote comprehensive unit and integration tests using JUnit and Testcontainers to validate business logic and database interactions; contributed to code reviews and improved codebase maintainability</li>
-                            </ul>
-                        </div>
+        <a href="https://github.com/abs768" target="_blank" rel="noopener noreferrer" class="contact-card" aria-label="Follow on GitHub">
+          <div class="contact-icon" aria-hidden="true" role="img" aria-label="GitHub icon">
+            <i class="fab fa-github"></i>
+          </div>
+          <div class="contact-info">
+            <span class="contact-label">github</span>
+            <span class="contact-value">follow</span>
+          </div>
+        </a>
+      </div>
 
-                        <div class="resume-item" id="experience-nvidia">
-                            <h4>Edge AI Systems Developer</h4>
-                            <p class="resume-year">May 2022 - October 2022</p>
-                            <p class="resume-institution">NVIDIA Jetson AI Industry Training, Chennai, India</p>
-                            <p class="resume-tech"><em>Python, CUDA, TensorRT, Docker</em></p>
-                            <ul class="resume-bullets">
-                                <li>Optimized vehicle damage detection CNN for deployment on NVIDIA Jetson edge devices; achieved 87% accuracy with sub-100ms inference latency through TensorRT optimization and FP16 quantization</li>
-                                <li>Built hardware-accelerated preprocessing pipeline using VPI (Vision Programming Interface) to offload image operations from CPU to GPU, reducing preprocessing bottleneck by 60% and improving overall throughput</li>
-                                <li>Profiled and optimized inference performance using Nsight Systems; identified memory transfer bottlenecks and migrated to Unified Memory architecture to eliminate CPU-GPU copy overhead</li>
-                                <li>Containerized inference pipeline with Docker and NVIDIA Container Runtime for consistent deployment across development and edge production environments</li>
-                            </ul>
-                        </div>
-                    </div>
+      <!-- Footer -->
+      <footer class="footer">
+        <p id="copyright-year">&copy; 2026 bhavani shankar ajith</p>
+        <p>built to ship</p>
+      </footer>
+    </div>
+  </section>
 
-                    <div class="resume-block">
-                        <h3 class="resume-heading">Certifications & Publications</h3>
-                        <div class="resume-item">
-                            <ul class="resume-bullets">
-                                <li>Oracle Cloud Infrastructure 2025 Generative AI Professional - October 2025</li>
-                                <li>Oracle Cloud Infrastructure 2025 Data Science Professional - September 2025</li>
-                                <li>Publication: Co-authored research on plant disease classification (IGI Global, 2024); 99.61% accuracy</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="projects-section">
-        <div class="container">
-            <h2 class="section-title">Projects</h2>
-            
-            <!-- Project 1: Uber Data Analytics -->
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="./images/Dashboard.png" alt="Uber Data Analytics Dashboard">
-                </div>
-                <div class="project-content">
-                    <h3>Uber Data Analytics | Modern Data Engineering</h3>
-                    <p class="project-tech">(Python, GCP, BigQuery, Mage.ai, Looker Studio)</p>
-                    <p class="project-description">End-to-end data engineering project analyzing NYC Uber trip data. Built modern data pipeline using Mage.ai on GCP with automated ETL, BigQuery analytics, and interactive Looker dashboards visualizing 100K+ trip records.</p>
-                    <a href="https://github.com/abs768/Uber-Data-Analytics" target="_blank" class="btn btn-secondary">VIEW PROJECT</a>
-                </div>
-            </div>
-
-            <!-- Project 2: Selective Prediction -->
-            <div class="project-card project-card-reverse">
-                <div class="project-content">
-                    <h3>Calibrated Selective Prediction with MC-Dropout</h3>
-                    <p class="project-tech">(PyTorch, MC-Dropout, Bayesian ML, Gradio)</p>
-                    <p class="project-description">Graduate research project implementing uncertainty-aware neural networks that know when to abstain. Uses Monte Carlo Dropout for Bayesian inference, achieving 95.79% accuracy on CIFAR-10 with ROC-AUC 0.866 for OOD detection. Demonstrates robust handling of documents, ambiguous objects, and distribution shifts.</p>
-                    <a href="https://github.com/abs768/Robust-Image-Classification-with-MC-Dropout-Tri-Gating-and-SVHN-Calibrated-OOD-Thresholds" target="_blank" class="btn btn-secondary">VIEW PROJECT</a>
-                </div>
-                <div class="project-image">
-                    <img src="./images/selective_prediction.png" alt="Selective Prediction System">
-                </div>
-            </div>
-
-            <!-- Project 3: Plant Disease Classification -->
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="./images/plant_disease.png" alt="Plant Disease Classification">
-                </div>
-                <div class="project-content">
-                    <h3>Plant Disease Classification Using DenseNet-169</h3>
-                    <p class="project-tech">(TensorFlow, Matplotlib, NumPy, FastAPI, Postman)</p>
-                    <p class="project-description">Fine-tuned pre-trained DenseNet-169 model on PlantVillage dataset for efficient plant disease classification. Incorporates Conv2D Layer, Global Average Pooling, Batch Normalization, Dropout, and Dense Layers. Features drag-and-drop interface for easy testing.</p>
-                    <a href="https://github.com/abs768/Plant-Disease-Classification-Using-Densenet-169-Architecture-of-CNN" target="_blank" class="btn btn-secondary">VIEW PROJECT</a>
-                </div>
-            </div>
-
-            <div class="projects-cta">
-                <a href="https://github.com/abs768?tab=repositories" target="_blank" class="btn btn-outline">SEE ALL PROJECTS</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <h2 class="section-title">Contact Me</h2>
-            <p class="section-subtitle">Let's start a conversation</p>
-            
-            <div class="contact-grid">
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-home"></i>
-                    </div>
-                    <h3>Home</h3>
-                    <a href="javascript:void(0);" class="contact-link" onclick="toggleAddress()">My Address</a>
-                    <div id="full-address" style="display:none; margin-top: 10px; color: #ffffff; font-weight: 500;">
-                        700 Health Sciences Drive,<br>
-                        Chapin Apartments,<br>
-                        Stony Brook, New York,<br>
-                        11790
-                    </div>
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fab fa-linkedin"></i>
-                    </div>
-                    <h3>LinkedIn</h3>
-                    <a href="https://www.linkedin.com/in/abs768/" target="_blank" class="contact-link">My LinkedIn</a>
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <h3>Email Address</h3>
-                    <a href="mailto:abhavanishankar2002@gmail.com" class="contact-link">My Email</a>
-                </div>
-
-                <div class="contact-card">
-                    <div class="contact-icon">
-                        <i class="fab fa-github"></i>
-                    </div>
-                    <h3>GitHub</h3>
-                    <a href="https://github.com/abs768" target="_blank" class="contact-link">My GitHub</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Address Toggle Script -->
-    <script>
-        function toggleAddress() {
-            const addressDiv = document.getElementById('full-address');
-            if (addressDiv) {
-                if (addressDiv.style.display === 'none' || addressDiv.style.display === '') {
-                    addressDiv.style.display = 'block';
-                } else {
-                    addressDiv.style.display = 'none';
-                }
-            }
-        }
-    </script>
-
-    <!-- External JavaScript -->
-    <script src="./js/portfolio.js"></script>
+  <!-- JavaScript -->
+  <script src="js/portfolio.js" defer></script>
 </body>
 </html>
