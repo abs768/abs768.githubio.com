@@ -8,86 +8,167 @@
 */
 
 // =========================
-// Preloader: typewriter + per-letter colors, then reveal page
+// =========================
+// Preloader: per-letter 3D flip + per-letter colors, then reveal page
+// =========================
+// =========================
+// Preloader: per-letter flip (rotation) + colors, then reveal page
+// =========================
+// =========================
+// Preloader: per-letter 3D flip + per-letter colors, then reveal page
+// =========================
+// =========================
+// Preloader: per-letter flip + sliding window highlight, then reveal page
 // =========================
 (() => {
-  const MIN_MS = 900;       // minimum time preloader stays up
-  const TYPE_DELAY = 55;    // speed per character (ms)
-  const END_PAUSE = 300;    // pause after typing completes
-
-  // Change this text to whatever you want:
-  const TEXT = "greetings.";
-
-  // Per-character color map (index -> css color).
-  // Example: make 'g' one color, 'r' another, etc.
-  // If an index isn't listed, it defaults to white.
+  const TEXT = "welcome";
   const COLORS = {
-    0: "#00b4d8", // g
-    1: "#f72585", // r
-    2: "#7209b7", // e
-    3: "#00b4d8", // e
-    4: "#f72585", // t
-    5: "#2dd4bf", // i
-    6: "#a78bfa", // n
-    7: "#ffb703", // g
-    8: "#ffffff"  // .
+    0: "#00b4d8",
+    1: "#f72585",
+    2: "#7209b7",
+    3: "#2dd4bf",
+    4: "#a78bfa",
+    5: "#ffffff",
+    6: "#ffffff"
   };
 
-  const start = performance.now();
-  const root = document.documentElement;
+  const MIN_MS = 900;
+  const STAGGER_MS = 170;
+  const END_PAUSE = 350;
 
+  // sliding window settings
+  const WINDOW_K = 3;
+  const STEP_MS = 190;      // slow this to make it calmer (e.g. 230)
+  const HOLD_MS = 260;
+
+  const root = document.documentElement;
   root.classList.add("is-loading");
   document.body.classList.add("is-loading");
 
   const textEl = document.getElementById("preloaderText");
-  if (!textEl) return;
+  if (!textEl) {
+    root.classList.remove("is-loading");
+    document.body.classList.remove("is-loading");
+    root.classList.add("is-loaded");
+    return;
+  }
 
-  // Typewriter: append one colored <span> at a time
-  let i = 0;
-  const typeNext = () => {
-    if (i >= TEXT.length) return;
+  textEl.textContent = "";
 
-    const ch = TEXT[i];
+  // detect reduced motion
+  const reduceMotion = (() => {
+    try {
+      return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    } catch (_) {
+      return false;
+    }
+  })();
+
+  // read animation duration from CSS (so it stays in sync with your .preloader-letter)
+  const temp = document.createElement("span");
+  temp.className = "preloader-letter";
+  temp.style.position = "absolute";
+  temp.style.visibility = "hidden";
+  temp.textContent = "x";
+  textEl.appendChild(temp);
+
+  const dur = getComputedStyle(temp).animationDuration || "1.2s";
+  const ANIM_MS = dur.includes("ms") ? parseFloat(dur) : parseFloat(dur) * 1000;
+  temp.remove();
+
+  // build letters
+  const letters = [];
+  for (let i = 0; i < TEXT.length; i++) {
     const span = document.createElement("span");
-    span.textContent = ch;
+    span.textContent = TEXT[i];
+    span.className = "preloader-letter";
+    span.dataset.axis = (i % 2 === 0) ? "x" : "y";
     span.style.color = COLORS[i] || "#ffffff";
+    span.style.animationDelay = `${i * STAGGER_MS}ms`;
     textEl.appendChild(span);
+    letters.push(span);
+  }
 
-    i++;
-    setTimeout(typeNext, TYPE_DELAY);
+  const flipTotal = (TEXT.length - 1) * STAGGER_MS + ANIM_MS;
+
+  const finish = () => {
+    root.classList.remove("is-loading");
+    document.body.classList.remove("is-loading");
+    root.classList.add("is-loaded");
   };
 
-  // Start typing immediately
-  typeNext();
+  const runSlidingWindow = () => {
+    return new Promise((resolve) => {
+      if (reduceMotion) return resolve();
 
-  // Only hide preloader after:
-  // - window load (assets done)
-  // - typing done + end pause
-  const whenTypingDone = () =>
-    new Promise((resolve) => {
-      const check = () => {
-        if (i >= TEXT.length) {
-          setTimeout(resolve, END_PAUSE);
-        } else {
-          setTimeout(check, 50);
+      const steps = Math.max(1, TEXT.length - WINDOW_K + 1);
+      const pad = 8;
+
+      // create window rect
+      const win = document.createElement("div");
+      win.className = "sw-window";
+      textEl.appendChild(win);
+
+      const clearActive = () => letters.forEach(l => l.classList.remove("sw-active"));
+
+      const setWindowToRange = (start) => {
+        clearActive();
+        const end = start + WINDOW_K - 1;
+
+        for (let i = start; i <= end; i++) {
+          if (letters[i]) letters[i].classList.add("sw-active");
         }
+
+        const left = letters[start].offsetLeft;
+        const right = letters[end].offsetLeft + letters[end].offsetWidth;
+        const width = (right - left);
+
+        win.style.opacity = "1";
+        win.style.width = `${Math.max(6, width + pad * 2)}px`;
+        win.style.transform = `translate3d(${left - pad}px, -50%, 0)`;
       };
-      check();
+
+      let idx = 0;
+      setWindowToRange(0);
+
+      const t = setInterval(() => {
+        idx++;
+        if (idx >= steps) {
+          clearInterval(t);
+          clearActive();
+
+          // fade out window
+          win.style.opacity = "0";
+
+          setTimeout(() => {
+            win.remove();
+            resolve();
+          }, 240);
+
+          return;
+        }
+        setWindowToRange(idx);
+      }, STEP_MS);
+
+      // tiny hold at the end (feels intentional)
+      setTimeout(() => {}, HOLD_MS);
     });
+  };
 
-  const whenWindowLoaded = () =>
-    new Promise((resolve) => window.addEventListener("load", resolve, { once: true }));
+  const start = performance.now();
 
-  Promise.all([whenTypingDone(), whenWindowLoaded()]).then(() => {
+  window.addEventListener("load", async () => {
     const elapsed = performance.now() - start;
-    const remaining = Math.max(0, MIN_MS - elapsed);
 
-    setTimeout(() => {
-      root.classList.remove("is-loading");
-      document.body.classList.remove("is-loading");
-      root.classList.add("is-loaded");
-    }, remaining);
-  });
+    // ensure we don't finish too fast
+    const waitForMin = Math.max(0, MIN_MS - elapsed);
+
+    // wait for flip to complete, then run sliding window, then finish
+    setTimeout(async () => {
+      await runSlidingWindow();
+      setTimeout(finish, END_PAUSE);
+    }, Math.max(0, flipTotal, waitForMin));
+  }, { once: true });
 })();
 
 

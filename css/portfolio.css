@@ -4,10 +4,7 @@
 */
 
 
-/* =========================
-   Preloader (Typewriter)
-========================= */
-#preloader {
+#preloader{
   position: fixed;
   inset: 0;
   z-index: 9999;
@@ -17,62 +14,140 @@
   transition: opacity 420ms ease, visibility 420ms ease;
 }
 
-html.is-loading, body.is-loading { overflow: hidden; }
+html.is-loading,
+body.is-loading{
+  overflow: hidden;
+}
 
-html.is-loaded #preloader {
+html.is-loaded #preloader{
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
 }
 
-.preloader-inner {
+.preloader-inner{
   display: grid;
   place-items: center;
   padding: 24px;
 }
 
-.preloader-type {
-  font-family: "JetBrains Mono", monospace;
-  font-weight: 700;
+.preloader-type{
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+               "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  font-weight: 600;
   font-size: clamp(28px, 5vw, 72px);
   letter-spacing: -0.03em;
-  color: #fff;
   line-height: 1.05;
   user-select: none;
+
   display: inline-flex;
   align-items: baseline;
   gap: 4px;
-}
 
-#preloaderText span {
-  display: inline-block;
-  transform: translateY(6px);
+  perspective: 1200px;
+  perspective-origin: 50% 50%;
+  transform-style: preserve-3d;
+
+  filter: blur(10px);
   opacity: 0;
-  animation: char-in 180ms ease forwards;
+  animation: preWordReveal 900ms ease forwards;
 }
 
-@keyframes char-in {
-  to { transform: translateY(0); opacity: 1; }
+@keyframes preWordReveal{
+  to{ filter: blur(0); opacity: 1; }
 }
 
-.type-caret {
-  width: 10px;
-  height: 1.05em;
-  background: #fff;
+/* Important for sliding window positioning */
+#preloaderText{
+  position: relative;
+  display: inline-flex;
+  gap: 2px;
+}
+
+/* Letters */
+.preloader-letter{
+  position: relative;
+  z-index: 1;
+
   display: inline-block;
-  transform: translateY(2px);
-  animation: caret-blink 850ms steps(1) infinite;
+  opacity: 0;
+
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform-origin: 50% 70%;
+  will-change: transform, opacity;
+
+  animation-duration: 1200ms;
+  animation-timing-function: cubic-bezier(.16,.84,.2,1);
+  animation-fill-mode: forwards;
 }
 
-@keyframes caret-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+/* Axis decides which keyframes apply */
+.preloader-letter[data-axis="x"]{
+  animation-name: preFlipInX;
+  transform: rotateX(110deg) translateY(18px) translateZ(60px) scale(0.98);
+}
+
+.preloader-letter[data-axis="y"]{
+  animation-name: preFlipInY;
+  transform: rotateY(110deg) translateY(18px) translateZ(60px) scale(0.98);
+}
+
+@keyframes preFlipInX{
+  0%   { opacity: 0; transform: rotateX(110deg) translateY(18px) translateZ(60px) scale(0.98); }
+  45%  { opacity: 1; transform: rotateX(-35deg) translateY(0)  translateZ(0)  scale(1.02); }
+  70%  { opacity: 1; transform: rotateX(18deg)  translateY(0)  translateZ(0)  scale(1.00); }
+  100% { opacity: 1; transform: rotateX(0deg)   translateY(0)  translateZ(0)  scale(1.00); }
+}
+
+@keyframes preFlipInY{
+  0%   { opacity: 0; transform: rotateY(110deg) translateY(18px) translateZ(60px) scale(0.98); }
+  45%  { opacity: 1; transform: rotateY(-35deg) translateY(0)  translateZ(0)  scale(1.02); }
+  70%  { opacity: 1; transform: rotateY(18deg)  translateY(0)  translateZ(0)  scale(1.00); }
+  100% { opacity: 1; transform: rotateY(0deg)   translateY(0)  translateZ(0)  scale(1.00); }
+}
+
+/* =========================
+   Sliding Window Highlight
+========================= */
+
+.preloader-letter.sw-active{
+  text-shadow: 0 0 18px rgba(255,255,255,0.22);
+  transform: translateZ(8px);
+}
+
+.sw-window{
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 1.35em;
+  transform: translate3d(0, -50%, 0);
+
+  border-radius: 14px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, width, opacity;
+
+  transition: transform 220ms ease, width 220ms ease, opacity 220ms ease;
 }
 
 /* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  #preloaderText span { animation: none !important; opacity: 1; transform: none; }
-  .type-caret { animation: none !important; opacity: 1; }
+@media (prefers-reduced-motion: reduce){
+  .preloader-type{
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+  .preloader-letter{
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .sw-window{ display: none !important; }
 }
 
 :root {
