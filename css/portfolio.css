@@ -3,6 +3,9 @@
   - Keep it clean, legible, and stable under interaction
 */
 
+/* =========================
+   Preloader
+========================= */
 
 #preloader{
   position: fixed;
@@ -41,7 +44,7 @@ html.is-loaded #preloader{
   user-select: none;
 
   display: inline-flex;
-  align-items: baseline;
+  align-items: center; /* FIX: more stable vertical alignment */
   gap: 4px;
 
   perspective: 1200px;
@@ -80,6 +83,8 @@ html.is-loaded #preloader{
   animation-duration: 1200ms;
   animation-timing-function: cubic-bezier(.16,.84,.2,1);
   animation-fill-mode: forwards;
+
+  letter-spacing: -0.01em; /* FIX: consistent glyph spacing */
 }
 
 /* Axis decides which keyframes apply */
@@ -120,7 +125,7 @@ html.is-loaded #preloader{
   position: absolute;
   left: 0;
   top: 50%;
-  height: 1.35em;
+  height: 1.25em; /* FIX: slightly more stable across browsers */
   transform: translate3d(0, -50%, 0);
 
   border-radius: 14px;
@@ -150,6 +155,10 @@ html.is-loaded #preloader{
   .sw-window{ display: none !important; }
 }
 
+/* =========================
+   Base Theme
+========================= */
+
 :root {
   --bg: #050607;
   --fg: rgba(255, 255, 255, 0.90);
@@ -167,7 +176,7 @@ html.is-loaded #preloader{
 * { box-sizing: border-box; }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* FIX: avoid double-smooth with JS */
 }
 
 body {
@@ -205,6 +214,7 @@ body::after {
   background-size: 48px 48px;
   opacity: 0.35;
   z-index: -1;
+  will-change: opacity; /* FIX: reduce jitter on some GPUs */
 }
 
 a {
@@ -221,7 +231,10 @@ a {
   padding: 104px 0;
 }
 
-/* Hero section: full height, centered */
+/* =========================
+   Hero
+========================= */
+
 #home.section {
   min-height: 100vh;
   display: grid;
@@ -306,7 +319,7 @@ a {
   color: var(--fg);
 }
 
-.btn-primary:hover,
+/* FIX: split hover rules so primary doesn't briefly pick secondary background */
 .btn-secondary:hover {
   transform: translateY(-1px);
   border-color: rgba(255,255,255,0.24);
@@ -314,6 +327,8 @@ a {
 }
 
 .btn-primary:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.24);
   background: rgba(255,255,255,0.96);
 }
 
@@ -331,7 +346,10 @@ a {
   max-width: 860px;
 }
 
-/* Nav dots */
+/* =========================
+   Nav dots
+========================= */
+
 .nav-dots {
   position: fixed;
   right: 18px;
@@ -361,7 +379,10 @@ a {
   border-color: rgba(255,255,255,0.85);
 }
 
-/* Principles */
+/* =========================
+   Principles
+========================= */
+
 .principles-grid {
   margin-top: 26px;
   display: grid;
@@ -401,7 +422,10 @@ a {
   font-size: 14px;
 }
 
-/* Tech stack */
+/* =========================
+   Tech stack
+========================= */
+
 .tech-stack {
   margin-top: 28px;
   padding: 18px 20px;
@@ -456,7 +480,10 @@ a {
   text-transform: lowercase;
 }
 
-/* Projects */
+/* =========================
+   Projects
+========================= */
+
 .projects-grid {
   margin-top: 26px;
   display: grid;
@@ -482,8 +509,7 @@ a {
 .project-image {
   width: 100%;
   height: 100%;
-  /* Apple/Adrian-style: full-bleed visuals with consistent framing.
-     If you truly need *zero* cropping, switch this back to `contain` and accept letterboxing. */
+  /* If you truly need zero cropping, switch to contain and accept letterboxing. */
   object-fit: cover;
   display: block;
   padding: 0;
@@ -631,7 +657,10 @@ a {
   color: rgba(255,255,255,0.92);
 }
 
-/* Timeline */
+/* =========================
+   Timeline
+========================= */
+
 .subsection-title {
   margin: 0 0 12px;
   font-size: 14px;
@@ -713,7 +742,10 @@ a {
   text-transform: lowercase;
 }
 
-/* Certs */
+/* =========================
+   Certs
+========================= */
+
 .cert-grid {
   margin-top: 18px;
   display: grid;
@@ -762,7 +794,10 @@ a {
   font-size: 13px;
 }
 
-/* Contact */
+/* =========================
+   Contact
+========================= */
+
 .contact-grid {
   margin-top: 18px;
   display: grid;
@@ -812,10 +847,13 @@ a {
   display: block;
   margin-top: 6px;
   color: rgba(255,255,255,0.92);
-  text-transform: lowercase;
+  text-transform: none; /* FIX: don't force-lowercase email/handles */
 }
 
-/* Footer */
+/* =========================
+   Footer
+========================= */
+
 .footer {
   margin-top: 44px;
   padding-top: 18px;
@@ -829,8 +867,10 @@ a {
   text-transform: lowercase;
 }
 
+/* =========================
+   Cursor
+========================= */
 
-/* Cursor */
 .cursor {
   position: fixed;
   top: 0;
@@ -852,10 +892,17 @@ a {
 
   /* Only visual properties transition; JS animates size/pos */
   transition: background 140ms ease, border-color 140ms ease, opacity 140ms ease, box-shadow 140ms ease;
+
+  contain: layout style paint; /* FIX: reduce repaint cost */
 }
 
 body.has-cursor {
   cursor: none;
+}
+
+/* FIX: ensure nothing shows a native cursor when custom cursor is on */
+body.has-cursor * {
+  cursor: none !important;
 }
 
 .cursor.is-hidden {
@@ -906,8 +953,10 @@ body.has-cursor {
   body { cursor: auto; }
 }
 
+/* =========================
+   Responsive
+========================= */
 
-/* Responsive */
 @media (max-width: 980px) {
   .principles-grid { grid-template-columns: 1fr; }
   .projects-grid { grid-template-columns: 1fr; }
@@ -919,18 +968,15 @@ body.has-cursor {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   .btn-primary, .btn-secondary, .project-link, .contact-card, .cert-card { transition: none; }
 }
-
 
 /* =========================
    Mobile UI Overrides
    (safe: only applies <= 640px)
 ========================= */
-@media (max-width: 640px) {
 
-  /* Global spacing + typography */
+@media (max-width: 640px) {
   .container {
     width: calc(100% - 28px);
   }
@@ -968,12 +1014,11 @@ body.has-cursor {
     border-radius: 14px;
   }
 
-  /* Hide nav dots on mobile (they annoy users, block taps, waste width) */
+  /* Hide nav dots on mobile */
   .nav-dots {
     display: none;
   }
 
-  /* Grids: tighter cards + better density */
   .principle-card,
   .project-card,
   .timeline-item,
@@ -983,33 +1028,20 @@ body.has-cursor {
     border-radius: 18px;
   }
 
-  .principles-grid {
-    gap: 14px;
-  }
+  .principles-grid { gap: 14px; }
+  .projects-grid { gap: 14px; }
 
-  .projects-grid {
-    gap: 14px;
-  }
+  .project-content { padding: 16px; }
 
-  .project-content {
-    padding: 16px;
-  }
+  .project-description { font-size: 13.5px; }
 
-  .project-description {
-    font-size: 13.5px;
-  }
-
-  /* Project metrics: 1 column on phones (2 columns becomes cramped) */
   .project-metrics {
     grid-template-columns: 1fr;
     gap: 10px;
   }
 
-  .metric {
-    padding: 12px 14px;
-  }
+  .metric { padding: 12px 14px; }
 
-  /* Timeline: remove fixed left column width */
   .timeline-item {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -1020,7 +1052,6 @@ body.has-cursor {
     opacity: 0.8;
   }
 
-  /* Cert + contact: 1 column is already set, reduce padding */
   .cert-card,
   .contact-card {
     padding: 14px;
@@ -1040,7 +1071,6 @@ body.has-cursor {
     border-radius: 16px;
   }
 
-  /* Tech tags: reduce padding so they don’t wrap awkwardly */
   .stack-tags span,
   .project-stack span,
   .timeline-stack span {
@@ -1048,17 +1078,13 @@ body.has-cursor {
     font-size: 11.5px;
   }
 
-  /* Footer: stack, center */
   .footer {
     justify-content: flex-start;
     flex-direction: column;
     gap: 8px;
   }
 
-  /* Preloader: reduce size slightly */
   .preloader-type {
     font-size: clamp(24px, 9vw, 56px);
   }
 }
-/* =========================
-   End of Portfolio Styles

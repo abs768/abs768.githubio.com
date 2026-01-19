@@ -1,28 +1,21 @@
 /*
-  Portfolio interactions
-  - Preloader: per-letter flip + sliding window (starts immediately)
+  Portfolio interactions (clean rewrite)
+  - Preloader: per-letter flip + sliding window (safe in <head>, safe if body not ready)
   - Greeting typewriter rotate
   - Custom cursor (sphere -> card/pointer bounds, text caret)
   - Nav dots active state (IntersectionObserver + top/bottom fallback)
   - Smooth anchor scroll
   - Footer year + graduation status badge
-
-  Versioning:
-  - Update PORTFOLIO_JS_VERSION when you deploy to force yourself to verify cache
 */
 
 (() => {
   'use strict';
 
   // =========================
-  // Version + cache-bust proof
+  // Version (helps you verify caching)
   // =========================
-  const PORTFOLIO_JS_VERSION = '2026-01-19.1';
-  const BUILD_STAMP = new Date().toISOString();
-
-  // Shows up in DevTools Console so you KNOW what file version is running.
-  // (If you don't see this, you're not running the code you think you are.)
-  console.log(`[portfolio.js] loaded v${PORTFOLIO_JS_VERSION} @ ${BUILD_STAMP}`);
+  const PORTFOLIO_JS_VERSION = '2026-01-19.2';
+  console.log(`[portfolio.js] loaded v${PORTFOLIO_JS_VERSION}`);
 
   // =========================
   // Helpers
@@ -56,9 +49,9 @@
     const viewBottom = scrollY + window.innerHeight;
     const docH = Math.max(
       document.documentElement.scrollHeight,
-      document.body.scrollHeight,
+      document.body ? document.body.scrollHeight : 0,
       document.documentElement.offsetHeight,
-      document.body.offsetHeight
+      document.body ? document.body.offsetHeight : 0
     );
     return viewBottom >= (docH - thresholdPx);
   };
@@ -68,7 +61,7 @@
   };
 
   // =========================
-  // Preloader (START IMMEDIATELY)
+  // Preloader (safe even if script loads in <head>)
   // =========================
   function initPreloaderEarly() {
     const TEXT = 'welcome';
@@ -82,55 +75,61 @@
       6: '#ffffff',
     };
 
+    // timing
     const MIN_MS = 900;
     const STAGGER_MS = 170;
     const END_PAUSE = 350;
 
+    // sliding window
     const WINDOW_K = 3;
-    const STEP_MS = 220;       // slow/fast window movement
+    const STEP_MS = 220;
     const WINDOW_FADE_MS = 240;
 
     const root = document.documentElement;
-    const body = document.body;
-
-    // Lock scroll immediately
-    root.classList.add('is-loading');
-    body.classList.add('is-loading');
-
     const reduceMotion = prefersReducedMotion();
 
-    // In case DOM isn't ready yet, we will "wait until preloaderText exists"
-    // BUT we still keep body locked from the start.
-    const startedAt = performance.now();
-
     let cancelled = false;
+    let startedAt = 0;
+
+    // lock scroll ASAP (body may not exist yet)
+    root.classList.add('is-loading');
+    const lockBodyIfReady = () => {
+      if (!document.body) return false;
+      document.body.classList.add('is-loading');
+      return true;
+    };
+    lockBodyIfReady();
 
     const finish = () => {
       if (cancelled) return;
       root.classList.remove('is-loading');
-      body.classList.remove('is-loading');
+      if (document.body) document.body.classList.remove('is-loading');
       root.classList.add('is-loaded');
     };
 
-    const buildAndRun = () => {
+    const run = () => {
       const textEl = document.getElementById('preloaderText');
 
-      // If the HTML isn't in the DOM yet, retry shortly.
+      // if markup not in DOM yet, retry a bit
       if (!textEl) {
-        // If user removed preloader markup entirely, don't hang forever:
-        // after ~2s, just finish.
-        if (performance.now() - startedAt > 2000) {
-          finish();
-          return;
-        }
-        setTimeout(buildAndRun, 16);
+        // keep trying, but don't hang forever if preloader was deleted
+        if (!startedAt) startedAt = performance.now();
+        if (performance.now() - startedAt > 2500) finish();
+        else setTimeout(run, 16);
         return;
       }
 
-      // Clear
+      // start timer when we actually can render
+      if (!startedAt) startedAt = performance.now();
+
+      // ensure body lock once body exists
+      if (!document.body || !document.body.classList.contains('is-loading')) {
+        lockBodyIfReady();
+      }
+
       textEl.textContent = '';
 
-      // Sync JS with CSS animation-duration of .preloader-letter
+      // sync with CSS animation-duration of .preloader-letter
       const temp = document.createElement('span');
       temp.className = 'preloader-letter';
       temp.style.position = 'absolute';
@@ -142,7 +141,7 @@
       const ANIM_MS = dur.includes('ms') ? parseFloat(dur) : parseFloat(dur) * 1000;
       temp.remove();
 
-      // Build letters
+      // build letters
       const letters = [];
       for (let i = 0; i < TEXT.length; i++) {
         const span = document.createElement('span');
@@ -179,7 +178,7 @@
 
           const left = letters[start].offsetLeft;
           const right = letters[end].offsetLeft + letters[end].offsetWidth;
-          const width = (right - left);
+          const width = right - left;
 
           win.style.opacity = '1';
           win.style.width = `${Math.max(6, width + pad * 2)}px`;
@@ -207,35 +206,28 @@
         }, STEP_MS);
       });
 
-      // Ensure the preloader doesn't end too fast
-      const elapsed = performance.now() - startedAt;
-      const waitForMin = Math.max(0, MIN_MS - elapsed);
+      const startSequence = async () => {
+        // enforce minimum duration from the real start
+        const elapsed = performance.now() - startedAt;
+        const waitForMin = Math.max(0, MIN_MS - elapsed);
+        const wait = Math.max(flipTotal, waitForMin);
 
-      // Wait for (flip animation) AND minimum duration
-      const wait = Math.max(flipTotal, waitForMin);
-
-      // If page is already fully loaded, we can start countdown immediately.
-      // Otherwise wait for window load so it doesn't disappear before assets are ready.
-      const startSequence = () => {
         setTimeout(async () => {
           await runSlidingWindow();
           setTimeout(finish, END_PAUSE);
         }, wait);
       };
 
-      if (document.readyState === 'complete') {
-        startSequence();
-      } else {
-        window.addEventListener('load', startSequence, { once: true });
-      }
+      // don't finish before assets load
+      if (document.readyState === 'complete') startSequence();
+      else window.addEventListener('load', startSequence, { once: true });
     };
 
-    buildAndRun();
-
+    run();
     return () => { cancelled = true; };
   }
 
-  // Start preloader RIGHT NOW (as soon as this script loads)
+  // Start preloader immediately when script loads
   const cleanupPreloader = initPreloaderEarly();
 
   // =========================
@@ -428,11 +420,9 @@
 
     const tick = () => {
       try {
-        if (lockedCardEl) {
-          lockToRect(lockedCardEl, 24, 'card');
-        } else if (lockedPointerEl) {
-          lockToRect(lockedPointerEl, 14, 'pointerlock');
-        } else {
+        if (lockedCardEl) lockToRect(lockedCardEl, 24, 'card');
+        else if (lockedPointerEl) lockToRect(lockedPointerEl, 14, 'pointerlock');
+        else {
           targetX = mx - targetW / 2;
           targetY = my - targetH / 2;
         }
@@ -475,7 +465,7 @@
   }
 
   // =========================
-  // Nav dots
+  // Nav dots (IO + top/bottom fallback)
   // =========================
   function initNavDots() {
     const nav = document.querySelector('.nav-dots');
@@ -490,10 +480,8 @@
     dots.forEach((dot) => {
       const href = dot.getAttribute('href');
       if (!href || !href.startsWith('#') || href === '#') return;
-
       const sec = document.querySelector(href);
       if (!sec) return;
-
       dotToSection.set(dot, sec);
       sections.push(sec);
     });
@@ -529,14 +517,10 @@
       if (!best) {
         const anchorY = window.innerHeight * 0.35;
         let minDist = Infinity;
-
         for (const sec of sections) {
           const rect = sec.getBoundingClientRect();
           const dist = Math.abs(rect.top - anchorY);
-          if (dist < minDist) {
-            minDist = dist;
-            best = sec;
-          }
+          if (dist < minDist) { minDist = dist; best = sec; }
         }
       }
 
@@ -643,11 +627,10 @@
   }
 
   // =========================
-  // Boot (WAIT FOR DOM)
+  // Boot (wait for DOM for non-preloader features)
   // =========================
   function boot() {
     const cleanups = [];
-
     cleanups.push(initGreetingRotate());
     cleanups.push(initCursor());
     cleanups.push(initNavDots());
